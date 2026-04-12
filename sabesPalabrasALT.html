@@ -7,7 +7,7 @@
 <style>
 body {
     font-family: Arial, sans-serif;
-    background: #6b0f1a;
+    background: white;
     margin: 0;
     min-height: 100vh;
     display: flex;
@@ -15,99 +15,117 @@ body {
     align-items: center;
 }
 
-/* Ferdig-tekst */
-#done {
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    color: white;
-    font-size: 48px;
-    font-weight: bold;
-}
-
-/* Restart-knapp */
-#restartBtn {
-    position: fixed;
-    top: 90px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 28px;
-    font-size: 18px;
-    display: none;
-    z-index: 1000;
-}
-
 #box {
-    position: relative;
+    position: relative;       /* NY – nødvendig for bildene */
+    z-index: 1;               /* NY */
     background: white;
-    padding: 20px;
-    max-width: 700px;
+    padding: 24px;
+    max-width: 560px;
     width: 100%;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-#levels {
-    margin-bottom: 20px;
-}
+
 
 #levels button {
     margin-right: 10px;
-    padding: 10px;
+    padding: 10px 14px;
+    font-size: 15px;
 }
 
-input {
-    padding: 8px;
-    width: 100%;
+/* Svaralternativer */
+.option {
+    display: block;
     margin-top: 10px;
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fafafa;
+    transition: background 0.2s, border 0.2s;
 }
 
-button {
-    margin-top: 10px;
-    padding: 10px;
+.option:hover {
+    background: #f0f0f0;
+}
+
+.option.correct {
+    background: #d4f8d4;
+    border-color: #2ecc71;
+}
+
+.option.wrong {
+    background: #f8d4d4;
+    border-color: #e74c3c;
+}
+
+#nextBtn {
+    margin-top: 18px;
+    padding: 10px 18px;
+    font-size: 16px;
+    display: none;
+}
+
+/* Progressbar */
+#progress {
+    height: 16px;
+    background: #e0e0e0;
+    border-radius: 8px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: #676968;
+    transition: width 0.3s;
 }
 
 #feedback {
     margin-top: 10px;
     font-weight: bold;
-    white-space: pre-wrap;
 }
 </style>
 </head>
 
 <body>
 
-<header>
-    <h1 id="done"></h1>
-    <button id="restartBtn" onclick="restartGame()">Jugar de nuevo</button>
-</header>
-
 <div id="box">
-    <a href="https://olemunthe.github.io/aprendeEspanol/">Volver a la página principal</a>
 
-    <h2>¿Qué significa?</h2>
-    <p>Escribe la palabra en español (sin mayúsculas) y pulsa Enter</p>
+<a href="https://olemunthe.github.io/aprendeEspanol/">
+    Volver a la página principal
+</a>
 
-    <p id="question"><strong>Elige cuántas palabras</strong></p>
+<!-- ALLTID SYNLIG -->
+<div id="progress">
+    <div id="progressBar"></div>
+</div>
 
-    <div id="levels">
-        <button onclick="startGame(10)">10 palabras</button>
-        <button onclick="startGame(20)">20 palabras</button>
-        <button onclick="startGame(30)">30 palabras</button>
-    </div>
+<p id="stats"></p>
+<p id="feedback"></p>
+<p id="final"></p>
 
-    <input type="text" id="answer" placeholder="Tu respuesta">
-    <button onclick="checkAnswer()">Responder</button>
+<h2 id="title">¿Qué significa?</h2>
 
-    <p id="feedback" style="color:red;"></p>
-    <p id="stats"></p>
-    <p id="final"></p>
+<p id="question"><strong>Elige cuántas palabras</strong></p>
+
+<div id="levels">
+    <button onclick="startGame(10)">10 palabras</button>
+    <button onclick="startGame(20)">20 palabras</button>
+    <button onclick="startGame(30)">30 palabras</button>
+</div>
+
+<div id="options"></div>
+
+<button id="nextBtn" onclick="nextQuestion()">Neste spørsmål</button>
+
 </div>
 
 <script>
 let allWords = [
-    ["klassisk", 	"clásico"],
+ ["klassisk", 	"clásico"],
 ["komisk", 	"cómico"],
 ["økonomisk", 	"económico"],
 ["fysisk", 	"físico"],
@@ -164,7 +182,7 @@ let allWords = [
 ["pesimist", 	"pesimista"],
 ["pianist", 	"pianista"],
 ["turist", 	"turista"],
-["realistisk", 	"realista"]
+["realistisk", 	"realista"],
 
 ["kabel", 		"cable"],
 ["sammenlignbare", 	"comparable"],
@@ -283,109 +301,116 @@ let allWords = [
 ["vegetasjon", 		"vegetación"],
 ["ventilasjon", 		"ventilación"],
 ["versjon", 		"versión"],
-["visjon", 		"visión"]
+["visjon", 		"visión"],
+
 
 
 ];
 
 let L = [];
+let total = 0;
 let riktig = 0;
 let feil = 0;
 let index = 0;
-let venterFasit = false;
 
-const answerInput = document.getElementById("answer");
-
-answerInput.addEventListener("keydown", e => {
-    if (e.key === "Enter") checkAnswer();
-});
-
-function startGame(antall) {
+function startGame(n) {
     document.getElementById("levels").style.display = "none";
-    document.getElementById("restartBtn").style.display = "none";
-    document.getElementById("done").innerText = "";
 
     riktig = 0;
     feil = 0;
 
-    L = [...allWords].sort(() => Math.random() - 0.5).slice(0, antall);
+    L = [...allWords]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, n);
 
-    document.getElementById("feedback").innerText = "";
-    document.getElementById("stats").innerText = "";
-    document.getElementById("final").innerText = "";
+    total = L.length;
+
+    updateProgress();
+    updateStats();
 
     nextQuestion();
 }
 
 function nextQuestion() {
-    if (L.length === 0) {
-        let score = Math.round(100 * riktig / (riktig + feil));
-        document.getElementById("final").innerText =
-            "Puntuación final: " + score + "%";
-        document.getElementById("done").innerText = "¡Terminado!";
-        document.getElementById("restartBtn").style.display = "block";
-        return;
-    }
+    document.getElementById("nextBtn").style.display = "none";
+    document.getElementById("feedback").innerText = "";
+
+   if (L.length === 0) {
+    document.getElementById("options").innerHTML = "";
+    document.getElementById("question").style.display = "none";
+    document.getElementById("title").style.display = "none";
+    document.getElementById("nextBtn").style.display = "none";
+
+    document.getElementById("final").innerText =
+        "Puntuación final: " +
+        Math.round(100 * riktig / (riktig + feil)) + "%";
+    return;
+}
 
     index = Math.floor(Math.random() * L.length);
     document.getElementById("question").innerText =
-        '¿Qué significa "' + L[index][0] + '"?';
+        `¿Qué significa "${L[index][0]}"?`;
 
-    answerInput.value = "";
-    answerInput.focus();
-    venterFasit = false;
+    showOptions();
 }
 
-function checkAnswer() {
-    if (L.length === 0) return;
+function showOptions() {
+    const options = document.getElementById("options");
+    options.innerHTML = "";
 
-    const svar = answerInput.value.trim();
-    const fasit = L[index][1];
+    const correct = L[index][1];
 
-    if (!venterFasit) {
-        if (svar === fasit) {
-            riktig++;
-            document.getElementById("feedback").innerText = "¡Correcto!";
-            L.splice(index, 1);
-            nextQuestion();
-        } else {
-            feil++;
-            document.getElementById("feedback").innerText =
-                `"${fasit}" significa "${L[index][0]}".\nEscribe la respuesta correcta para continuar.`;
-            answerInput.value = "";
-            venterFasit = true;
-        }
+    let wrong = allWords
+        .map(w => w[1])
+        .filter(w => w !== correct)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3);
+
+    [correct, ...wrong]
+        .sort(() => Math.random() - 0.5)
+        .forEach(text => {
+            let div = document.createElement("div");
+            div.className = "option";
+            div.innerText = text;
+            div.onclick = () =>
+                selectOption(div, text === correct);
+            options.appendChild(div);
+        });
+}
+
+function selectOption(el, correct) {
+    document
+        .querySelectorAll(".option")
+        .forEach(o => o.onclick = null);
+
+    if (correct) {
+        el.classList.add("correct");
+        riktig++;
+        L.splice(index, 1);
+        document.getElementById("feedback").innerText = "¡Correcto!";
+
+        updateProgress(); // ✅ OPPDATERES MED EN GANG
     } else {
-        if (svar === fasit) {
-            document.getElementById("feedback").innerText =
-                "¡Bien! Seguimos con la siguiente palabra.";
-            nextQuestion();
-        } else {
-            document.getElementById("feedback").innerText =
-                `Debes escribir exactamente: "${fasit}"`;
-            answerInput.value = "";
-        }
+        el.classList.add("wrong");
+        feil++;
+        document.getElementById("feedback").innerText =
+            "Respuesta correcta: " + L[index][1];
     }
 
-    let prosent = Math.round(100 * riktig / (riktig + feil));
-    document.getElementById("stats").innerText =
-        `Aciertos: ${riktig} | Errores: ${feil} | Puntuación: ${prosent}% | Restantes: ${L.length}`;
+    updateStats();
+
+    document.getElementById("nextBtn").style.display = "block";
 }
 
-function restartGame() {
-    document.getElementById("levels").style.display = "block";
-    document.getElementById("restartBtn").style.display = "none";
-    document.getElementById("done").innerText = "";
+function updateProgress() {
+    let done = total - L.length;
+    document.getElementById("progressBar").style.width =
+        Math.round(100 * done / total) + "%";
+}
 
-    document.getElementById("question").innerText =
-        "Elige cuántas palabras";
-    document.getElementById("feedback").innerText = "";
-    document.getElementById("stats").innerText = "";
-    document.getElementById("final").innerText = "";
-
-    L = [];
-    riktig = 0;
-    feil = 0;
+function updateStats() {
+    document.getElementById("stats").innerText =
+        `Aciertos: ${riktig} | Errores: ${feil} | Restantes: ${L.length}`;
 }
 </script>
 
