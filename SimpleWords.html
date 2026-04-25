@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>¿Qué significa?</title>
 
 <style>
+
+#box {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: white;
@@ -14,18 +23,6 @@ body {
     justify-content: center;
     align-items: center;
 }
-
-#box {
-    position: relative;       /* NY – nødvendig for bildene */
-    z-index: 1;               /* NY */
-    background: white;
-    padding: 24px;
-    max-width: 560px;
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
 
 
 #levels button {
@@ -94,10 +91,6 @@ body {
 
 <div id="box">
 
-<a href="https://olemunthe.github.io/aprendeEspanol/">
-    Tilbake til hovedsiden
-</a>
-
 <!-- ALLTID SYNLIG -->
 <div id="progress">
     <div id="progressBar"></div>
@@ -109,66 +102,66 @@ body {
 
 <h2 id="title">¿Qué significa?</h2>
 
-<p id="question"><strong>Velg antall ord du vil prøve deg på</strong></p>
+<p id="question"><strong>Elige cuántas palabras</strong></p>
 
 <div id="levels">
-    <button onclick="startGame(10)">10 ord</button>
-    <button onclick="startGame(20)">20 ord</button>
+    <button onclick="startGame(10)">10 palabras</button>
+    <button onclick="startGame(20)">20 palabras</button>
 </div>
 
 <div id="options"></div>
 
-<button id="nextBtn" onclick="nextQuestion()">Neste spørsmål</button>
+<button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
 
 </div>
 
 <script>
 let allWords = [
-    ["Hei, ha det, vi sees", 		"hola, adiós, nos vemos"],
-["Jeg heter (kaller) Ole", 		"me llamo Ole"],
-["God morgen", 			"buenos días"],
-["God kveld", 			"buena tarde"],
-["God natt", 			"buena noche"],
-
-["Ja, nei, kanskje",		"sí, no, tal vez"],
-["Jeg tror det", 			"creo que sí"],
-["Så klart", 			"por supuesto"],
-["Forhåpentligvis", 		"ojalá"],
-["Det høres bra ut", 		"suena bien"],
-["Det høres dårlig ut", 		"suena mal"],
-
-["Beklager", 			"lo siento"],
-["Vær så snill", 			"por favor"],
-["Unnskyld", 			"perdón"],
-["Det var så lite", 		"de nada"],
-
-["Jeg forstår ikke", 		"no entiendo"],
-["Jeg vet ikke", 			"no sé"],
-["Jeg vet det",			"lo sé"],
-
-["Kom igjen, la oss gå", 		"vamos, vámonos"],
-["Kom igjen/heia/ok/oi", 		"venga"],
-["Fort deg", 			"date prisa"],
-
-["Et bord til tretten", 		"una mesa para trece"],
-["Regningen…", 			"la cuenta, por favor"],
-
-["God tur", 		"buen viaje"],
-["Vær forsiktig", 		"ten cuidado"],
-["Lykke til", 		"buena suerte"],
-["Ta vare på deg selv", 	"cuídate"],
-["Vent et øyeblikk",	"espera un momento"],
-["Hold kjeft(!)", 		"cállate"],
-["Gratulerer", 		"felicidades"],
-["Snakk saktere", 	"habla más despacio"],
-["Du har rett",		"tienes razón"],
-["Kom igjen",		"venga"],
-["Kom inn", 		"pasa"],
-["Kast det/den bort",	"tíralo"],
-["Lukk den/det",		"ciérralo"],
-["Tro (på) meg",		"créame"],
-
-
+["Hello", 			"hola"],
+["Bye", 				"adiós"],
+["Yes", 				"sí"],
+["No", 				"no"],
+["Maybe", 			"tal vez"],
+["Hopefully", 			"ojalá"],
+["Sorry", 			"lo siento"],
+["Excuse me", 			"perdón"],
+["Please", 			"por favor"],
+["Excuse me (formal)", 		"disculpe"],
+["Okay", 				"venga"],
+["Okay", 				"vale"],
+["Also", 				"también"],
+["Only / just", 			"solo"],
+["Here", 				"aquí"],
+["There", 				"allí"],
+["Now", 				"ahora"],
+["Later", 				"luego"],
+["Today", 				"hoy"],
+["Tomorrow", 			"mañana"],
+["Yesterday", 			"ayer"],
+["Inside", 				"dentro"],
+["Outside", 			"fuera"],
+["Very", 				"muy"],
+["Too", 				"demasiado"],
+["More", 				"más"],
+["Less", 				"menos"],
+["Good", 				"bueno"],
+["Bad", 				"malo"],
+["Big", 				"grande"],
+["Small", 				"pequeño"],
+["Easy", 				"fácil"],
+["Difficult", 			"difícil"],
+["Same", 				"mismo"],
+["Other", 				"otro"],
+["All", 				"todo"],
+["Nothing", 			"nada"],
+["Money", 				"dinero"],
+["Time", 				"tiempo"],
+["People", 				"gente"],
+["Place", 				"lugar"],
+["Thing", 				"cosa"],
+["Water", 				"agua"],
+["Food", 				"comida"],
+["Help", 				"ayuda"]
 ];
 
 let L = [];
@@ -206,14 +199,14 @@ function nextQuestion() {
     document.getElementById("nextBtn").style.display = "none";
 
     document.getElementById("final").innerText =
-        "Score totalt: " +
+        "Puntuación final: " +
         Math.round(100 * riktig / (riktig + feil)) + "%";
     return;
 }
 
     index = Math.floor(Math.random() * L.length);
     document.getElementById("question").innerText =
-        `Hva betyr "${L[index][0]}" på spansk?`;
+        `¿Qué significa "${L[index][0]}"?`;
 
     showOptions();
 }
@@ -274,7 +267,7 @@ function updateProgress() {
 
 function updateStats() {
     document.getElementById("stats").innerText =
-        `Riktige: ${riktig} | Feil: ${feil} | Resterende ord: ${L.length}`;
+        `Aciertos: ${riktig} | Errores: ${feil} | Restantes: ${L.length}`;
 }
 </script>
 

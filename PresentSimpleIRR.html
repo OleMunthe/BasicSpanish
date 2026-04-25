@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>¿Qué significa?</title>
 
 <style>
+
+#box {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     background: white;
@@ -15,42 +24,6 @@ body {
     align-items: center;
 }
 
-#box {
-    position: relative;       /* NY – nødvendig for bildene */
-    z-index: 1;               /* NY */
-    background: white;
-    padding: 24px;
-    max-width: 560px;
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-#box::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -220px;
-    width: 200px;
-    height: 500px;
-    background: url("comer1.jpg") no-repeat center;
-    background-size: contain;
-    transform: translateY(-50%);
-    z-index: -1;
-}
-
-#box::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: -220px;
-    width: 200px;
-    height: 300px;
-    background: url("comer2.jpg") no-repeat center;
-    background-size: contain;
-    transform: translateY(-50%);
-    z-index: -1;
-}
 
 #levels button {
     margin-right: 10px;
@@ -118,10 +91,6 @@ body {
 
 <div id="box">
 
-<a href="https://olemunthe.github.io/aprendeEspanol/">
-    Volver a la página principal
-</a>
-
 <!-- ALLTID SYNLIG -->
 <div id="progress">
     <div id="progressBar"></div>
@@ -142,25 +111,67 @@ body {
 
 <div id="options"></div>
 
-<button id="nextBtn" onclick="nextQuestion()">Neste spørsmål</button>
+<button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
 
 </div>
 
 <script>
 let allWords = [
-    ["jeg spiser brød","como pan"],
-    ["vi spiser pizza","comemos pizza"],
-    ["du spiser eplet","comes la manzana"],
-    ["dere spiser ris","coméis arroz"],
-    ["han/hun spiser kylling","come pollo"],
-    ["de spiser kaken","comen el pastel"],
+    ["I do/make", 		"hago"],
+["we do/make", 		"hacemos"],
+["you do/make", 		"haces"],
+["he/she does/makes", 	"hace"],
+["they do/make", 		"hacen"],
 
-    ["jeg spiste pizza","comí pizza"],
-    ["vi spiste pizza","comimos pizza"],
-    ["du spiste eplet","comiste la manzana"],
-    ["dere spiste ris","comisteis arroz"],
-    ["han spiste kylling","comió pollo"],
-    ["de spiste kaken","comieron el pastel"]
+["I say/tell", 		"digo"],
+["we say/tell", 		"decimos"],
+["you say/tell", 		"dices"],
+["he/she says/tells", 	"dice"],
+["they say/tell", 		"dicen"],
+
+["I have", 		"tengo"],
+["we have", 		"tenemos"],
+["you have", 		"tienes"],
+["he/she has", 	"tiene"],
+["they have", 		"tienen"],
+
+["I come", 		"vengo"],
+["we come", 		"venimos"],
+["you come", 		"vienes"],
+["he/she comes", 	"viene"],
+["they come", 		"vienen"],
+
+["I leave/go out", 		"salgo"],
+["we leave/go out", 		"salimos"],
+["you leave/go out", 		"sales"],
+["he/she leaves/goes out", 	"sale"],
+["they leave/go out", 		"salen"],
+
+["I go", 		"voy"],
+["we go", 		"vamos"],
+["you go", 		"vas"],
+["he/she goes", 	"va"],
+["they go", 		"van"],
+
+["I know", 		"sé"],
+["we know", 		"sabemos"],
+["you know", 		"sabes"],
+["he/she knows", 	"sabe"],
+["they know", 		"saben"],
+
+["I am (state)", 		"estoy"],
+["we are (state)", 		"estamos"],
+["you are (state)", 		"estás"],
+["he/she is (state)", 	"está"],
+["they are (state)", 		"están"],
+
+["I am (characteristic)", 		"soy"],
+["we are (characteristic)", 		"somos"],
+["you are (characteristic)", 		"eres"],
+["he/she is (characteristic)", 	"es"],
+["they are (characteristic)", 		"son"],
+
+
 ];
 
 let L = [];

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>¿Qué significa?</title>
+
+<style>
+
+#box {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: white;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+#levels button {
+    margin-right: 10px;
+    padding: 10px 14px;
+    font-size: 15px;
+}
+
+/* Svaralternativer */
+.option {
+    display: block;
+    margin-top: 10px;
+    padding: 14px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    background: #fafafa;
+    transition: background 0.2s, border 0.2s;
+}
+
+.option:hover {
+    background: #f0f0f0;
+}
+
+.option.correct {
+    background: #d4f8d4;
+    border-color: #2ecc71;
+}
+
+.option.wrong {
+    background: #f8d4d4;
+    border-color: #e74c3c;
+}
+
+#nextBtn {
+    margin-top: 18px;
+    padding: 10px 18px;
+    font-size: 16px;
+    display: none;
+}
+
+/* Progressbar */
+#progress {
+    height: 16px;
+    background: #e0e0e0;
+    border-radius: 8px;
+    margin: 15px 0;
+    overflow: hidden;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: #676968;
+    transition: width 0.3s;
+}
+
+#feedback {
+    margin-top: 10px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div id="box">
+
+<!-- ALLTID SYNLIG -->
+<div id="progress">
+    <div id="progressBar"></div>
+</div>
+
+<p id="stats"></p>
+<p id="feedback"></p>
+<p id="final"></p>
+
+<h2 id="title">¿Qué significa?</h2>
+
+<p id="question"><strong>Elige cuántas palabras</strong></p>
+
+<div id="levels">
+    <button onclick="startGame(10)">10 palabras</button>
+    <button onclick="startGame(20)">20 palabras</button>
+</div>
+
+<div id="options"></div>
+
+<button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
+
+</div>
+
+<script>
+let allWords = [
+["I speak", 		"hablo"],
+["we speak", 		"hablamos"],
+["you speak", 		"hablas"],
+["he/she speaks", 	"habla"],
+["they speak", 		"hablan"],
+
+["I spoke",             "hablé"],
+["we spoke",             "hablemos"],
+["you spoke",             "hablaste"],
+["he/she spoke",         "habló"],
+["they spoke",             "hablaron"],
+["I used to speak",         "hablaba"],
+["we used to speak",         "hablábamos"],
+["you used to speak",         "hablabas"],
+["he/she used to speak",     "hablaba"],
+["they used to speak",         "hablaban"],
+
+["I speak (future)", 		"hablaré"],
+["we speak (future)", 		"hablaremos"],
+["you speak (future)", 		"hablarás"],
+["he/she speaks (future)", 	"hablara"],
+["they speak (future)", 	"hablarán"],
+
+["I am going to speak", 		"voy a hablar"],
+["we are going to speak", 		"vamos a hablar"],
+["you are going to speak", 		"vas a hablar"],
+["he/she is going to speak", 	"va a hablar"],
+["they are going to speak", 	"van a hablar"],
+
+["I eat", 		"como"],
+["we eat", 		"comemos"],
+["you eat", 		"comes"],
+["he/she eats", 	"come"],
+["they eat", 		"comen"],
+["I ate",             	"comí"],
+["we ate",             	"comimos"],
+["you ate",           	"comiste"],
+["he/she ate",         	"comió"],
+["they ate",           	"comieron"],
+["I used to eat",       	"comía"],
+["we used to eat",      	"comíamos"],
+["you used to eat",     	"comías"],
+["he/she used to eat",  	"comía"],
+["they used to eat",    	"comían"],
+["I eat (future)", 		"comeré"],
+["we eat (future)", 		"comeremos"],
+["you eat (future)", 		"comerás"],
+["he/she eats (future)", 	"comerá"],
+["they eat (future)", 		"comerán"],
+["I am going to eat", 		"voy a comer"],
+["we are going to eat", 	"vamos a comer"],
+["you are going to eat", 	"vas a comer"],
+["he/she is going to eat", 	"va a comer"],
+["they are going to eat", 	"van a comer"],
+
+["I wait", 		"espero"],
+["we wait", 		"esperamos"],
+["you wait", 		"esperas"],
+["he/she waits", 	"espera"],
+["they wait", 		"esperan"],
+["I waited",             	"esperé"],
+["we waited",             	"esperamos"],
+["you waited",           	"esperaste"],
+["he/she waited",         	"esperó"],
+["they waited",           	"esperaron"],
+["I used to wait",       	"esperaba"],
+["we used to wait",      	"esperábamos"],
+["you used to wait",     	"esperabas"],
+["he/she used to wait",  	"esperaba"],
+["they used to wait",    	"esperaban"],
+["I wait (future)", 		"esperaré"],
+["we wait (future)", 		"esperaremos"],
+["you wait (future)", 		"esperarás"],
+["he/she waits (future)", 	"esperará"],
+["they wait (future)", 		"esperarán"],
+["I am going to wait", 		"voy a esperar"],
+["we are going to wait", 	"vamos a esperar"],
+["you are going to wait", 	"vas a esperar"],
+["he/she is going to wait", 	"va a esperar"],
+["they are going to wait", 	"van a esperar"],
+
+["I try", 		"intento"],
+["we try", 		"intentamos"],
+["you try", 		"intentas"],
+["he/she tries", 	"intenta"],
+["they try", 		"intentan"],
+["I tried",             	"intenté"],
+["we tried",             	"intentamos"],
+["you tried",           	"intentaste"],
+["he/she tried",         	"intentó"],
+["they tried",           	"intentaron"],
+["I used to try",       	"intentaba"],
+["we used to try",      	"intentábamos"],
+["you used to try",     	"intentabas"],
+["he/she used to try",  	"intentaba"],
+["they used to try",    	"intentaban"],
+["I try (future)", 		"intentaré"],
+["we try (future)", 		"intentaremos"],
+["you try (future)", 		"intentarás"],
+["he/she tries (future)", 	"intentará"],
+["they try (future)", 		"intentarán"],
+["I am going to try", 		"voy a intentar"],
+["we are going to try", 	"vamos a intentar"],
+["you are going to try", 	"vas a intentar"],
+["he/she is going to try", 	"va a intentar"],
+["they are going to try", 	"van a intentar"],
+
+["I open", 		"abro"],
+["we open", 		"abrimos"],
+["you open", 		"abres"],
+["he/she opens", 	"abre"],
+["they open", 		"abren"],
+["I opened",             	"abrí"],
+["we opened",             	"abrimos"],
+["you opened",           	"abriste"],
+["he/she opened",         	"abrió"],
+["they opened",           	"abrieron"],
+["I used to open",       	"abría"],
+["we used to open",      	"abríamos"],
+["you used to open",     	"abrías"],
+["he/she used to open",  	"abría"],
+["they used to open",    	"abrían"],
+["I open (future)", 		"abriré"],
+["we open (future)", 		"abriremos"],
+["you open (future)", 		"abrirás"],
+["he/she opens (future)", 	"abrirá"],
+["they open (future)", 		"abrirán"],
+["I am going to open", 		"voy a abrir"],
+["we are going to open", 	"vamos a abrir"],
+["you are going to open", 	"vas a abrir"],
+["he/she is going to open", 	"va a abrir"],
+["they are going to open", 	"van a abrir"],
+
+["I see", 		"veo"],
+["we see", 		"vemos"],
+["you see", 		"ves"],
+["he/she sees", 	"ve"],
+["they see", 		"ven"],
+["I saw",             	"vi"],
+["we saw",             	"vimos"],
+["you saw",           	"viste"],
+["he/she saw",         	"vio"],
+["they saw",           	"vieron"],
+["I used to see",       	"veía"],
+["we used to see",      	"veíamos"],
+["you used to see",     	"veías"],
+["he/she used to see",  	"veía"],
+["they used to see",    	"veían"],
+["I see (future)", 		"veré"],
+["we see (future)", 		"veremos"],
+["you see (future)", 		"verás"],
+["he/she sees (future)", 	"verá"],
+["they see (future)", 		"verán"],
+["I am going to see", 		"voy a ver"],
+["we are going to see", 	"vamos a ver"],
+["you are going to see", 	"vas a ver"],
+["he/she is going to see", 	"va a ver"],
+["they are going to see", 	"van a ver"],
+
+["I want", 		"quiero"],
+["we want", 		"queremos"],
+["you want", 		"quieres"],
+["he/she wants", 	"quiere"],
+["they want", 		"quieren"],
+["I wanted",             	"quise"],
+["we wanted",             	"quisimos"],
+["you wanted",           	"quisiste"],
+["he/she wanted",         	"quiso"],
+["they wanted",           	"quisieron"],
+["I used to want",       	"quería"],
+["we used to want",      	"queríamos"],
+["you used to want",     	"querías"],
+["he/she used to want",  	"quería"],
+["they used to want",    	"querían"],
+["I want (future)", 		"querré"],
+["we want (future)", 		"querremos"],
+["you want (future)", 		"querrás"],
+["he/she wants (future)", 	"querrá"],
+["they want (future)", 		"querrán"],
+["I am going to want", 		"voy a querer"],
+["we are going to want", 	"vamos a querer"],
+["you are going to want", 	"vas a querer"],
+["he/she is going to want", 	"va a querer"],
+["they are going to want", 	"van a querer"],
+
+["I can", 		"puedo"],
+["we can", 		"podemos"],
+["you can", 		"puedes"],
+["he/she can", 	"puede"],
+["they can", 		"pueden"],
+["I could",             	"pude"],
+["we could",             	"pudimos"],
+["you could",           	"pudiste"],
+["he/she could",         	"pudo"],
+["they could",           	"pudieron"],
+["I used to be able to",       	"podía"],
+["we used to be able to",      	"podíamos"],
+["you used to be able to",     	"podías"],
+["he/she used to be able to",  	"podía"],
+["they used to be able to",    	"podían"],
+["I can (future)", 		"podré"],
+["we can (future)", 		"podremos"],
+["you can (future)", 		"podrás"],
+["he/she can (future)", 		"podrá"],
+["they can (future)", 		"podrán"],
+["I am going to be able to", 		"voy a poder"],
+["we are going to be able to", 	"vamos a poder"],
+["you are going to be able to", 	"vas a poder"],
+["he/she is going to be able to", 	"va a poder"],
+["they are going to be able to", 	"van a poder"],
+
+["I do/make", 		"hago"],
+["we do/make", 		"hacemos"],
+["you do/make", 		"haces"],
+["he/she does/makes", 	"hace"],
+["they do/make", 		"hacen"],
+["I did/made",             	"hice"],
+["we did/made",             	"hicimos"],
+["you did/made",           	"hiciste"],
+["he/she did/made",         	"hizo"],
+["they did/made",           	"hicieron"],
+["I used to do/make",       	"hacía"],
+["we used to do/make",      	"hacíamos"],
+["you used to do/make",     	"hacías"],
+["he/she used to do/make",  	"hacía"],
+["they used to do/make",    	"hacían"],
+["I do/make (future)", 		"haré"],
+["we do/make (future)", 		"haremos"],
+["you do/make (future)", 		"harás"],
+["he/she does/makes (future)", 	"hará"],
+["they do/make (future)", 		"harán"],
+["I am going to do/make", 		"voy a hacer"],
+["we are going to do/make", 	"vamos a hacer"],
+["you are going to do/make", 	"vas a hacer"],
+["he/she is going to do/make", 	"va a hacer"],
+["they are going to do/make", 	"van a hacer"],
+
+["I say/tell", 		"digo"],
+["we say/tell", 		"decimos"],
+["you say/tell", 		"dices"],
+["he/she says/tells", 	"dice"],
+["they say/tell", 		"dicen"],
+["I said/told",             	"dije"],
+["we said/told",             	"dijimos"],
+["you said/told",           	"dijiste"],
+["he/she said/told",         	"dijo"],
+["they said/told",           	"dijeron"],
+["I used to say/tell",       	"decía"],
+["we used to say/tell",      	"decíamos"],
+["you used to say/tell",     	"decías"],
+["he/she used to say/tell",  	"decía"],
+["they used to say/tell",    	"decían"],
+["I say/tell (future)", 		"diré"],
+["we say/tell (future)", 		"diremos"],
+["you say/tell (future)", 		"dirás"],
+["he/she says/tells (future)", 	"dirá"],
+["they say/tell (future)", 		"dirán"],
+["I am going to say/tell", 		"voy a decir"],
+["we are going to say/tell", 	"vamos a decir"],
+["you are going to say/tell", 	"vas a decir"],
+["he/she is going to say/tell", 	"va a decir"],
+["they are going to say/tell", 	"van a decir"],
+
+["I have", 		"tengo"],
+["we have", 		"tenemos"],
+["you have", 		"tienes"],
+["he/she has", 	"tiene"],
+["they have", 		"tienen"],
+["I had",             	"tuve"],
+["we had",             	"tuvimos"],
+["you had",           	"tuviste"],
+["he/she had",         	"tuvo"],
+["they had",           	"tuvieron"],
+["I used to have",       	"tenía"],
+["we used to have",      	"teníamos"],
+["you used to have",     	"tenías"],
+["he/she used to have",  	"tenía"],
+["they used to have",    	"tenían"],
+["I have (future)", 		"tendré"],
+["we have (future)", 		"tendremos"],
+["you have (future)", 		"tendrás"],
+["he/she has (future)", 	"tendrá"],
+["they have (future)", 		"tendrán"],
+["I am going to have", 		"voy a tener"],
+["we are going to have", 	"vamos a tener"],
+["you are going to have", 	"vas a tener"],
+["he/she is going to have", 	"va a tener"],
+["they are going to have", 	"van a tener"],
+
+["I come", 		"vengo"],
+["we come", 		"venimos"],
+["you come", 		"vienes"],
+["he/she comes", 	"viene"],
+["they come", 		"vienen"],
+["I came",             	"vine"],
+["we came",             	"vinimos"],
+["you came",           	"viniste"],
+["he/she came",         	"vino"],
+["they came",           	"vinieron"],
+["I used to come",       	"venía"],
+["we used to come",      	"veníamos"],
+["you used to come",     	"venías"],
+["he/she used to come",  	"venía"],
+["they used to come",    	"venían"],
+["I come (future)", 		"vendré"],
+["we come (future)", 		"vendremos"],
+["you come (future)", 		"vendrás"],
+["he/she comes (future)", 	"vendrá"],
+["they come (future)", 		"vendrán"],
+["I am going to come", 		"voy a venir"],
+["we are going to come", 	"vamos a venir"],
+["you are going to come", 	"vas a venir"],
+["he/she is going to come", 	"va a venir"],
+["they are going to come", 	"van a venir"],
+
+["I leave/go out", 		"salgo"],
+["we leave/go out", 		"salimos"],
+["you leave/go out", 		"sales"],
+["he/she leaves/goes out", 	"sale"],
+["they leave/go out", 		"salen"],
+["I left/went out",             	"salí"],
+["we left/went out",             	"salimos"],
+["you left/went out",           	"saliste"],
+["he/she left/went out",         	"salió"],
+["they left/went out",           	"salieron"],
+["I used to leave/go out",       	"salía"],
+["we used to leave/go out",      	"salíamos"],
+["you used to leave/go out",     	"salías"],
+["he/she used to leave/go out",  	"salía"],
+["they used to leave/go out",    	"salían"],
+["I leave/go out (future)", 		"saldré"],
+["we leave/go out (future)", 		"saldremos"],
+["you leave/go out (future)", 		"saldrás"],
+["he/she leaves/goes out (future)", 	"saldrá"],
+["they leave/go out (future)", 		"saldrán"],
+["I am going to leave/go out", 		"voy a salir"],
+["we are going to leave/go out", 	"vamos a salir"],
+["you are going to leave/go out", 	"vas a salir"],
+["he/she is going to leave/go out", 	"va a salir"],
+["they are going to leave/go out", 	"van a salir"],
+
+["I go", 		"voy"],
+["we go", 		"vamos"],
+["you go", 		"vas"],
+["he/she goes", 	"va"],
+["they go", 		"van"],
+["I went",             	"fui (ir)"],
+["we went",             	"fuimos (ir)"],
+["you went",           	"fuiste (ir)"],
+["he/she went",         	"fue (ir)"],
+["they went",           	"fueron (ir)"],
+["I used to go",       	"iba"],
+["we used to go",      	"íbamos"],
+["you used to go",     	"ibas"],
+["he/she used to go",  	"iba"],
+["they used to go",    	"iban"],
+["I go (future)", 		"iré"],
+["we go (future)", 		"iremos"],
+["you go (future)", 		"irás"],
+["he/she goes (future)", 	"irá"],
+["they go (future)", 		"irán"],
+["I am going to go", 		"voy a ir"],
+["we are going to go", 	"vamos a ir"],
+["you are going to go", 	"vas a ir"],
+["he/she is going to go", 	"va a ir"],
+["they are going to go", 	"van a ir"],
+
+["I know", 		"sé"],
+["we know", 		"sabemos"],
+["you know", 		"sabes"],
+["he/she knows", 	"sabe"],
+["they know", 		"saben"],
+["I knew",             	"supe"],
+["we knew",             	"supimos"],
+["you knew",           	"supiste"],
+["he/she knew",         	"supo"],
+["they knew",           	"supieron"],
+["I used to know",       	"sabía"],
+["we used to know",      	"sabíamos"],
+["you used to know",     	"sabías"],
+["he/she used to know",  	"sabía"],
+["they used to know",    	"sabían"],
+["I know (future)", 		"sabré"],
+["we know (future)", 		"sabremos"],
+["you know (future)", 		"sabrás"],
+["he/she knows (future)", 	"sabrá"],
+["they know (future)", 		"sabrán"],
+["I am going to know", 		"voy a saber"],
+["we are going to know", 	"vamos a saber"],
+["you are going to know", 	"vas a saber"],
+["he/she is going to know", 	"va a saber"],
+["they are going to know", 	"van a saber"],
+
+["I am (state)", 		"estoy"],
+["we are (state)", 		"estamos"],
+["you are (state)", 		"estás"],
+["he/she is (state)", 	"está"],
+["they are (state)", 		"están"],
+["I was (state)",             	"estuve"],
+["we were (state)",             	"estuvimos"],
+["you were (state)",           	"estuviste"],
+["he/she was (state)",         	"estuvo"],
+["they were (state)",           	"estuvieron"],
+["I used to be (state)",       	"estaba"],
+["we used to be (state)",      	"estábamos"],
+["you used to be (state)",     	"estabas"],
+["he/she used to be (state)",  	"estaba"],
+["they used to be (state)",    	"estaban"],
+["I am (future, state)", 		"estaré"],
+["we are (future, state)", 		"estaremos"],
+["you are (future, state)", 		"estarás"],
+["he/she is (future, state)", 	"estará"],
+["they are (future, state)", 		"estarán"],
+["I am going to be (state)", 		"voy a estar"],
+["we are going to be (state)", 	"vamos a estar"],
+["you are going to be (state)", 	"vas a estar"],
+["he/she is going to be (state)", 	"va a estar"],
+["they are going to be (state)", 	"van a estar"],
+
+["I am (characteristic)", 		"soy"],
+["we are (characteristic)", 		"somos"],
+["you are (characteristic)", 		"eres"],
+["he/she is (characteristic)", 	"es"],
+["they are (characteristic)", 		"son"],
+["I was (characteristic)",             	"fui"],
+["we were (characteristic)",             	"fuimos"],
+["you were (characteristic)",           	"fuiste"],
+["he/she was (characteristic)",         	"fue"],
+["they were (characteristic)",           	"fueron"],
+["I used to be (characteristic)",       	"era"],
+["we used to be (characteristic)",      	"éramos"],
+["you used to be (characteristic)",     	"eras"],
+["he/she used to be (characteristic)",  	"era"],
+["they used to be (characteristic)",    	"eran"],
+["I am (future, characteristic)", 		"seré"],
+["we are (future, characteristic)", 		"seremos"],
+["you are (future, characteristic)", 		"serás"],
+["he/she is (future, characteristic)", 	"será"],
+["they are (future, characteristic)", 		"serán"],
+["I am going to be (characteristic)", 		"voy a ser"],
+["we are going to be (characteristic)", 	"vamos a ser"],
+["you are going to be (characteristic)", 	"vas a ser"],
+["he/she is going to be (characteristic)", 	"va a ser"],
+["they are going to be (characteristic)", 	"van a ser"],
+
+];
+
+let L = [];
+let total = 0;
+let riktig = 0;
+let feil = 0;
+let index = 0;
+
+function startGame(n) {
+    document.getElementById("levels").style.display = "none";
+
+    riktig = 0;
+    feil = 0;
+
+    L = [...allWords]
+        .sort(() => Math.random() - 0.5)
+        .slice(0, n);
+
+    total = L.length;
+
+    updateProgress();
+    updateStats();
+
+    nextQuestion();
+}
+
+function nextQuestion() {
+    document.getElementById("nextBtn").style.display = "none";
+    document.getElementById("feedback").innerText = "";
+
+    if (L.length === 0) {
+    document.getElementById("options").innerHTML = "";
+    document.getElementById("question").style.display = "none";
+    document.getElementById("title").style.display = "none";
+    document.getElementById("nextBtn").style.display = "none";
+
+    document.getElementById("final").innerText =
+        "Puntuación final: " +
+        Math.round(100 * riktig / (riktig + feil)) + "%";
+    return;
+}
+
+    index = Math.floor(Math.random() * L.length);
+    document.getElementById("question").innerText =
+        `¿Qué significa "${L[index][0]}"?`;
+
+    showOptions();
+}
+
+function showOptions() {
+    const options = document.getElementById("options");
+    options.innerHTML = "";
+
+    const correct = L[index][1];
+
+    let wrong = allWords
+        .map(w => w[1])
+        .filter(w => w !== correct)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3);
+
+    [correct, ...wrong]
+        .sort(() => Math.random() - 0.5)
+        .forEach(text => {
+            let div = document.createElement("div");
+            div.className = "option";
+            div.innerText = text;
+            div.onclick = () =>
+                selectOption(div, text === correct);
+            options.appendChild(div);
+        });
+}
+
+function selectOption(el, correct) {
+    document
+        .querySelectorAll(".option")
+        .forEach(o => o.onclick = null);
+
+    if (correct) {
+        el.classList.add("correct");
+        riktig++;
+        L.splice(index, 1);
+        document.getElementById("feedback").innerText = "¡Correcto!";
+
+        updateProgress(); // ✅ OPPDATERES MED EN GANG
+    } else {
+        el.classList.add("wrong");
+        feil++;
+        document.getElementById("feedback").innerText =
+            "Respuesta correcta: " + L[index][1];
+    }
+
+    updateStats();
+
+    document.getElementById("nextBtn").style.display = "block";
+}
+
+function updateProgress() {
+    let done = total - L.length;
+    document.getElementById("progressBar").style.width =
+        Math.round(100 * done / total) + "%";
+}
+
+function updateStats() {
+    document.getElementById("stats").innerText =
+        `Aciertos: ${riktig} | Errores: ${feil} | Restantes: ${L.length}`;
+}
+</script>
+
+</body>
+</html>

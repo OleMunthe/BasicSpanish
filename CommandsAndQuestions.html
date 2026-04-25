@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <title>¿Qué significa?</title>
 
 <style>
+
+#box {
+    width: 100%;
+    max-width: 420px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+
 body {
     font-family: Arial, sans-serif;
     background: white;
@@ -15,42 +25,6 @@ body {
     align-items: center;
 }
 
-#box {
-    position: relative;       /* NY – nødvendig for bildene */
-    z-index: 1;               /* NY */
-    background: white;
-    padding: 24px;
-    max-width: 560px;
-    width: 100%;
-    border-radius: 10px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-}
-
-#box::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -250px;
-    width: 200px;
-    height: 500px;
-    background: url("hablar1.jpg") no-repeat center;
-    background-size: contain;
-    transform: translateY(-50%);
-    z-index: -2;
-}
-
-#box::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: -250px;
-    width: 200px;
-    height: 300px;
-    background: url("hablar2.jpg") no-repeat center;
-    background-size: contain;
-    transform: translateY(-50%);
-    z-index: -2;
-}
 
 #levels button {
     margin-right: 10px;
@@ -118,10 +92,6 @@ body {
 
 <div id="box">
 
-<a href="https://olemunthe.github.io/aprendeEspanol/">
-    Volver a la página principal
-</a>
-
 <!-- ALLTID SYNLIG -->
 <div id="progress">
     <div id="progressBar"></div>
@@ -138,52 +108,50 @@ body {
 <div id="levels">
     <button onclick="startGame(10)">10 palabras</button>
     <button onclick="startGame(20)">20 palabras</button>
-    <button onclick="startGame(30)">30 palabras</button>
 </div>
 
 <div id="options"></div>
 
-<button id="nextBtn" onclick="nextQuestion()">Neste spørsmål</button>
+<button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
 
 </div>
 
 <script>
 let allWords = [
-["jeg snakker med han/henne", 		"le hablo"],
-["vi snakker med han/henne", 		"le hablamos"],
-["du snakker med han/henne", 		"le hablas"],
-["dere snakker med han/henne", 		"le habláis"],
-["han/hun snakker med han/henne", 	"le habla"],
-["de snakker med han/henne", 		"le hablan"],
+    ["Have a good trip", 		"buen viaje"],
+["Be careful", 			"ten cuidado"],
+["Good luck", 			"buena suerte"],
+["Take care", 			"cuídate"],
+["Wait a moment",		"espera un momento"],
+["Shut up (!)", 		"cállate"],
+["Congratulations", 		"felicidades"],
+["Speak more slowly", 		"habla más despacio"],
+["You are right",		"tienes razón"],
+["Come on",			"venga"],
+["Come in", 			"pasa"],
+["Throw it away",		"tíralo"],
+["Close it",			"ciérralo"],
+["Believe me",			"créame"],
 
-["jeg snakket med han/henne (spesikt tidspunkt)", 		"le hablé"],
-["vi snakket med han/henne (spesikt tidspunkt)", 		"le hablemos"],
-["du snakket med han/henne (spesikt tidspunkt)", 		"le hablaste"],
-["dere snakket med han/henne (spesikt tidspunkt)", 		"le hablasteis"],
-["han/hun snakket med han/henne (spesikt tidspunkt)", 	"le habló"],
-["de snakket med han/henne (spesikt tidspunkt)", 		"le hablaron"],
-
-["jeg snakket med han/henne (pleide å snakke)", 		"le hablaba"],
-["vi snakket med han/henne (pleide å snakke)", 		"le hablábamos"],
-["du snakket med han/henne (pleide å snakke)", 		"le hablabas"],
-["dere snakket med han/henne (pleide å snakke)", 		"le hablabais"],
-["han/hun snakket med han/henne (pleide å snakke)", 	"le hablaba"],
-["de snakket med han/henne (pleide å snakke)", 		"le hablaban"],
-
-["jeg snakker med han/henne (i framtiden)", 		"le hablaré"],
-["vi snakker med han/henne (i framtiden)", 		"le hablaremos"],
-["du snakker med han/henne (i framtiden)", 		"le hablarás"],
-["dere snakker med han/henne (i framtiden)", 		"le hablaréis"],
-["han/hun snakker med han/henne (i framtiden)", 	"le hablara"],
-["de snakker med han/henne (i framtiden)", 		"le hablarán"],
-
-["jeg skulle snakket med han/henne, men", 	"le hablaría, pero"],
-["vi skulle snakket med han/henne, men", 	"le hablaríamos, pero"],
-["du skulle snakket med han/henne, men", 	"le hablarías, pero"],
-["dere skulle snakket med han/henne, men", 	"le hablaríais, pero"],
-["han/hun skulle snakket med han/henne, men", 	"le hablaría, pero"],
-["de skulle snakket med han/henne, men", 	"le hablarían, pero"],
-
+["Do you want (it)?",				"quieres"],
+["What's happening?", 				"qué pasa"],
+["What's your name?",			"cómo te llamas"],
+["What's your name? (formal)",			"cómo se llama"],
+["Is it far?", 				"está lejos"],
+["How are you?", 			"cómo estás"],
+["How much does it cost?", 			"cuánto cuesta"],
+["How do you say – in Spanish?", 	"cómo se dice - en español"],
+["How can I help you?", 		"cómo puedo ayudarte"],
+["Can you help me?", 			"puedes ayudarme"],
+["Can you repeat it?", 			"puedes repetirlo"],
+["Can we come in?", 			"podemos entrar"],
+["Does it hurt?", 			"te duele"],
+["What does it mean?", 			"qué lo significa"],
+["What is that?", 				"qué es eso"],
+["What time is it?", 			"qué hora es"],
+["What do you want to do?", 			"qué quieres hacer"],
+["Why not?", 				"por qué no"],
+["Is there a shop nearby?",		"hay una tienda cerca de aquí"]
 
 ];
 
@@ -215,7 +183,7 @@ function nextQuestion() {
     document.getElementById("nextBtn").style.display = "none";
     document.getElementById("feedback").innerText = "";
 
-   if (L.length === 0) {
+    if (L.length === 0) {
     document.getElementById("options").innerHTML = "";
     document.getElementById("question").style.display = "none";
     document.getElementById("title").style.display = "none";
