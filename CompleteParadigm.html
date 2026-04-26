@@ -22,6 +22,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: calc(48px + env(safe-area-inset-top)); /* ← UTVIDELSE (reklame) */
+
 }
 
 
@@ -84,12 +86,71 @@ body {
     margin-top: 10px;
     font-weight: bold;
 }
+
+
+
+/*UTVIDELSE*/
+#intro, #theory {
+  background: #f5f7fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+#intro, #theory h3 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+/*UTVIDELSE (reklame) */
+#ad-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  background: #eeeeee;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+/*UTVIDELSE (reklame) */
+@media (max-width: 480px) {
+  body {
+    padding-top: calc(56px + env(safe-area-inset-top));
+  }
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- UTVIDELSE (reklame) -->
+<div id="ad-banner">
+  <!-- Reklamekode her -->
+  <span>Advertisement</span>
+</div>
+
+
 <div id="box">
+
+<!-- UTVIDELSE-->
+<div id="intro">
+<h1>Verbs: All Tenses</h1>
+  <h3>About this QUIZ</h3>
+  <p>
+    Each question presents an English verb, and your task is to select the correct Spanish translation.
+  </p>
+  <p>Choose how many words you want to practice (“Elige cuántas palabras”) - and the quiz will start.</p>
+  <p>PS: Before you begin, you may want to read some theory first (at the bottom of the page).</p>
+</div>
+
+
 
 <!-- ALLTID SYNLIG -->
 <div id="progress">
@@ -108,14 +169,152 @@ body {
     <button onclick="startGame(10)">10 palabras</button>
     <button onclick="startGame(20)">20 palabras</button>
 </div>
+<p> </p>
+
 
 <div id="options"></div>
 
 <button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
 
+<!-- UTVIDELSE-->
+<div id="theory">
+  <h3>THEORY</h3>
+
+  <p>
+    Spanish verbs change their form depending on <strong>time</strong>.
+    Each tense uses a specific structure built from the verb’s <em>stem</em>
+    and a set of endings. Understanding these patterns makes verb conjugation
+    much easier.
+  </p>
+
+  <h4>1. Present Tense (Presente)</h4>
+
+  <p>
+    In the present tense, regular verbs are formed by removing the infinitive
+    ending (<strong>-ar</strong>, <strong>-er</strong>, <strong>-ir</strong>)
+    and adding present‑tense endings.
+  </p>
+
+  <p><strong>Example (hablar):</strong></p>
+  <p>
+    hablar → habl‑ + o / as / a / amos / an → <em>hablo, hablas, habla, hablamos, hablan</em>
+  </p>
+
+  <p>
+    The same principle applies to verbs like <em>comer</em> (como, comes, come)
+    and <em>abrir</em> (abro, abres, abre).
+  </p>
+
+  <h4>2. Past Tense – Completed Actions (Pretérito)</h4>
+
+  <p>
+    The preterite tense describes actions that were completed in the past.
+    The verb stem is formed by removing the infinitive ending, and new past endings
+    are added.
+  </p>
+
+  <p>
+    For regular <strong>-ar</strong> verbs, the basic structure is:
+    <br>
+    <strong>verb stem + é / aste / ó / amos / aron</strong>
+  </p>
+
+  <p><strong>Example:</strong></p>
+  <p>
+    hablar → habl‑ → hablé, hablaste, habló, hablamos, hablaron
+  </p>
+
+  <p>
+    For <strong>-er</strong> and <strong>-ir</strong> verbs, the endings include
+    <em>-í</em> and <em>-ió</em>, as in <em>comí</em>, <em>vivió</em>.
+  </p>
+
+  <h4>3. Past Tense – Ongoing or Repeated Actions (Imperfecto)</h4>
+
+  <p>
+    The imperfect tense is used for ongoing actions, repeated actions,
+    or background situations in the past.
+    This tense has a very clear and regular structure.
+  </p>
+
+  <p>
+    For <strong>-ar</strong> verbs, the foundation of the imperfect tense
+    is the ending <strong>-aba</strong>.
+  </p>
+
+  <p><strong>Example (hablar):</strong></p>
+  <p>
+    hablar → habl‑aba → hablaba, hablabas, hablábamos, hablaban
+  </p>
+
+  <p>
+    For <strong>-er</strong> and <strong>-ir</strong> verbs, the corresponding
+    foundation is <strong>-ía</strong>, as in
+    <em>comía</em>, <em>vivíamos</em>, and <em>veían</em>.
+  </p>
+
+  <h4>4. Future Tense (Futuro)</h4>
+
+  <p>
+    In the future tense, Spanish uses a different structure.
+    Instead of removing the infinitive ending, the endings are added
+    directly to the entire infinitive.
+  </p>
+
+  <p>
+    <strong>infinitive + é / ás / á / emos / án</strong>
+  </p>
+
+  <p><strong>Example:</strong></p>
+  <p>
+    hablar → hablaré, hablarás, hablará, hablaremos, hablarán
+  </p>
+
+  <p>
+    The same pattern applies to <em>comeré</em>, <em>abrirán</em>, and
+    <em>saldrá</em> (with stem changes in irregular verbs).
+  </p>
+
+  <h4>5. “Going to” Future (Ir + a + infinitive)</h4>
+
+  <p>
+    Another very common way to express future actions is to use
+    the present tense of <em>ir</em> + <em>a</em> + infinitive.
+  </p>
+
+  <p><strong>Structure:</strong></p>
+  <p>
+    ir (present tense) + a + infinitive
+  </p>
+
+  <p><strong>Examples:</strong></p>
+  <p>
+    voy a hablar · vamos a comer · van a salir
+  </p>
+
+  <p>
+    This structure is often used for planned or intended future actions
+    and is extremely common in everyday Spanish.
+  </p>
+
+  <p>
+    By learning the basic structures behind each tense, you can recognize
+    and produce many verb forms even before memorizing every individual example.
+  </p>
+</div>
+
+
+
+
+<!-- UTVIDELSE-->
+<footer style="font-size:12px; color:#666; margin-top:20px;">
+  <p>This quiz is intended for educational purposes.</p>
+  <p>Contact: ohvmam@gmail.com</p>
+</footer>
 </div>
 
 <script>
+    
 let allWords = [
 ["I speak", 		"hablo"],
 ["we speak", 		"hablamos"],
@@ -571,6 +770,13 @@ let feil = 0;
 let index = 0;
 
 function startGame(n) {
+
+    /*UTVIDELSE*/
+    document.getElementById("ad-banner").style.display = "none";
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("theory").style.display = "none";
+
+
     document.getElementById("levels").style.display = "none";
 
     riktig = 0;

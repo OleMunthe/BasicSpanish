@@ -22,8 +22,6 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: calc(48px + env(safe-area-inset-top)); /* ← UTVIDELSE (reklame) */
-
 }
 
 
@@ -86,71 +84,12 @@ body {
     margin-top: 10px;
     font-weight: bold;
 }
-
-
-
-/*UTVIDELSE*/
-#intro, #theory {
-  background: #f5f7fa;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 14px;
-  margin-bottom: 16px;
-}
-#intro, #theory h3 {
-  margin-top: 0;
-  font-size: 16px;
-}
-
-/*UTVIDELSE (reklame) */
-#ad-banner {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 48px;
-  background: #eeeeee;
-  border-bottom: 1px solid #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  z-index: 1000;
-}
-
-/*UTVIDELSE (reklame) */
-@media (max-width: 480px) {
-  body {
-    padding-top: calc(56px + env(safe-area-inset-top));
-  }
-}
-
 </style>
 </head>
 
 <body>
 
-<!-- UTVIDELSE (reklame) -->
-<div id="ad-banner">
-  <!-- Reklamekode her -->
-  <span>Advertisement</span>
-</div>
-
-
 <div id="box">
-
-<!-- UTVIDELSE-->
-<div id="intro">
-<h1>Commands and Questions</h1>
-  <h3>About this QUIZ</h3>
-  <p>
-    Each question presents an English expression, and your task is to select the correct Spanish translation.
-  </p>
-  <p>Choose how many words you want to practice (“Elige cuántas palabras”) - and the quiz will start.</p>
-  <p>PS: Before you begin, you may want to read some theory first (at the bottom of the page).</p>
-</div>
-
-
 
 <!-- ALLTID SYNLIG -->
 <div id="progress">
@@ -169,85 +108,60 @@ body {
     <button onclick="startGame(10)">10 palabras</button>
     <button onclick="startGame(20)">20 palabras</button>
 </div>
-<p> </p>
-
 
 <div id="options"></div>
 
 <button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
 
-<!-- UTVIDELSE-->
-<div id="theory">
-  <h3>THEORY</h3>
-
-  <p>
-    Not everything in Spanish is built word by word from grammar rules.
-    Many everyday expressions must be learned as fixed phrases.
-  </p>
-
-  <p>
-    In this quiz, you will practice common expressions used in daily conversation,
-    such as greetings, questions, polite requests, and short commands.
-    Some of these phrases include verbs in the imperative form
-    (for example <em>ten cuidado</em>, <em>cuídate</em>),
-    while others are complete expressions whose meaning should be learned as a whole
-    (such as <em>buen viaje</em> or <em>buena suerte</em>).
-  </p>
-
-  <p>
-    Learning these expressions will help you sound more natural in Spanish
-    and understand spoken language more easily.
-  </p>
-</div>
-
-
-
-
-<!-- UTVIDELSE-->
-<footer style="font-size:12px; color:#666; margin-top:20px;">
-  <p>This quiz is intended for educational purposes.</p>
-  <p>Contact: ohvmam@gmail.com</p>
-</footer>
 </div>
 
 <script>
-    
 let allWords = [
-    ["Have a good trip", 		"buen viaje"],
-["Be careful", 			"ten cuidado"],
-["Good luck", 			"buena suerte"],
-["Take care", 			"cuídate"],
-["Wait a moment",		"espera un momento"],
-["Shut up (!)", 		"cállate"],
-["Congratulations", 		"felicidades"],
-["Speak more slowly", 		"habla más despacio"],
-["You are right",		"tienes razón"],
-["Come on",			"venga"],
-["Come in", 			"pasa"],
-["Throw it away",		"tíralo"],
-["Close it",			"ciérralo"],
-["Believe me",			"créame"],
-
-["Do you want (it)?",				"quieres"],
-["What's happening?", 				"qué pasa"],
-["What's your name?",			"cómo te llamas"],
-["What's your name? (formal)",			"cómo se llama"],
-["Is it far?", 				"está lejos"],
-["How are you?", 			"cómo estás"],
-["How much does it cost?", 			"cuánto cuesta"],
-["How do you say – in Spanish?", 	"cómo se dice - en español"],
-["How can I help you?", 		"cómo puedo ayudarte"],
-["Can you help me?", 			"puedes ayudarme"],
-["Can you repeat it?", 			"puedes repetirlo"],
-["Can we come in?", 			"podemos entrar"],
-["Does it hurt?", 			"te duele"],
-["What does it mean?", 			"qué lo significa"],
-["What is that?", 				"qué es eso"],
-["What time is it?", 			"qué hora es"],
-["What do you want to do?", 			"qué quieres hacer"],
-["Why not?", 				"por qué no"],
-["Is there a shop nearby?",		"hay una tienda cerca de aquí"]
-
+["Hello", 			"hola"],
+["Bye", 				"adiós"],
+["Yes", 				"sí"],
+["No", 				"no"],
+["Maybe", 			"tal vez"],
+["Hopefully", 			"ojalá"],
+["Sorry", 			"lo siento"],
+["Excuse me", 			"perdón"],
+["Please", 			"por favor"],
+["Excuse me (formal)", 		"disculpe"],
+["Okay", 				"venga"],
+["Okay", 				"vale"],
+["Also", 				"también"],
+["Only / just", 			"solo"],
+["Here", 				"aquí"],
+["There", 				"allí"],
+["Now", 				"ahora"],
+["Later", 				"luego"],
+["Today", 				"hoy"],
+["Tomorrow", 			"mañana"],
+["Yesterday", 			"ayer"],
+["Inside", 				"dentro"],
+["Outside", 			"fuera"],
+["Very", 				"muy"],
+["Too", 				"demasiado"],
+["More", 				"más"],
+["Less", 				"menos"],
+["Good", 				"bueno"],
+["Bad", 				"malo"],
+["Big", 				"grande"],
+["Small", 				"pequeño"],
+["Easy", 				"fácil"],
+["Difficult", 			"difícil"],
+["Same", 				"mismo"],
+["Other", 				"otro"],
+["All", 				"todo"],
+["Nothing", 			"nada"],
+["Money", 				"dinero"],
+["Time", 				"tiempo"],
+["People", 				"gente"],
+["Place", 				"lugar"],
+["Thing", 				"cosa"],
+["Water", 				"agua"],
+["Food", 				"comida"],
+["Help", 				"ayuda"]
 ];
 
 let L = [];
@@ -257,13 +171,6 @@ let feil = 0;
 let index = 0;
 
 function startGame(n) {
-
-    /*UTVIDELSE*/
-    document.getElementById("ad-banner").style.display = "none";
-    document.getElementById("intro").style.display = "none";
-    document.getElementById("theory").style.display = "none";
-
-
     document.getElementById("levels").style.display = "none";
 
     riktig = 0;

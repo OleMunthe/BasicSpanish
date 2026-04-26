@@ -22,6 +22,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: calc(48px + env(safe-area-inset-top)); /* ← UTVIDELSE (reklame) */
+
 }
 
 
@@ -84,12 +86,71 @@ body {
     margin-top: 10px;
     font-weight: bold;
 }
+
+
+
+/*UTVIDELSE*/
+#intro, #theory {
+  background: #f5f7fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+#intro, #theory h3 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+/*UTVIDELSE (reklame) */
+#ad-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  background: #eeeeee;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+/*UTVIDELSE (reklame) */
+@media (max-width: 480px) {
+  body {
+    padding-top: calc(56px + env(safe-area-inset-top));
+  }
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- UTVIDELSE (reklame) -->
+<div id="ad-banner">
+  <!-- Reklamekode her -->
+  <span>Advertisement</span>
+</div>
+
+
 <div id="box">
+
+<!-- UTVIDELSE-->
+<div id="intro">
+<h1>I am ...</h1>
+  <h3>About this QUIZ</h3>
+  <p>
+    Each question presents an English expression, and your task is to select the correct Spanish translation.
+  </p>
+  <p>Choose how many words you want to practice (“Elige cuántas palabras”) - and the quiz will start.</p>
+  <p>PS: Before you begin, you may want to read some theory first (at the bottom of the page).</p>
+</div>
+
+
 
 <!-- ALLTID SYNLIG -->
 <div id="progress">
@@ -108,14 +169,75 @@ body {
     <button onclick="startGame(10)">10 palabras</button>
     <button onclick="startGame(20)">20 palabras</button>
 </div>
+<p> </p>
+
 
 <div id="options"></div>
 
 <button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
 
+<!-- UTVIDELSE-->
+<div id="theory">
+  <h3>THEORY</h3>
+
+  <p>
+    In Spanish, feelings, states, and conditions are expressed using different verbs.
+    The most common ones are <strong>estar</strong>, <strong>ser</strong>, and <strong>tener</strong>.
+    Choosing the correct verb is essential, as the meaning can change completely.
+  </p>
+
+  <h4>1. Using <em>estar</em> for temporary states</h4>
+
+  <p>
+    The verb <strong>estar</strong> is used for temporary states, emotions, physical conditions,
+    and locations.
+  </p>
+
+  <p>
+    Examples: <em>estoy cansado</em> (I am tired), <em>estoy feliz</em> (I am happy),
+    <em>estoy enfermo</em> (I am sick), <em>estoy en casa</em> (I am at home)
+  </p>
+
+  <h4>2. Using <em>ser</em> for permanent characteristics</h4>
+
+  <p>
+    The verb <strong>ser</strong> is used for permanent or defining characteristics,
+    such as identity, personality, or inherent qualities.
+  </p>
+
+  <p>
+    Example: <em>soy rico</em> (I am rich)
+  </p>
+
+  <h4>3. Using <em>tener</em> for physical needs</h4>
+
+  <p>
+    In Spanish, physical needs such as hunger and thirst are expressed using
+    the verb <strong>tener</strong>, not <em>estar</em>.
+  </p>
+
+  <p>
+    Examples: <em>tengo hambre</em> (I am hungry), <em>tengo sed</em> (I am thirsty)
+  </p>
+
+  <p>
+    Learning which verb to use will help you sound more natural
+    and avoid common mistakes when describing how you feel.
+  </p>
+</div>
+
+
+
+
+<!-- UTVIDELSE-->
+<footer style="font-size:12px; color:#666; margin-top:20px;">
+  <p>This quiz is intended for educational purposes.</p>
+  <p>Contact: ohvmam@gmail.com</p>
+</footer>
 </div>
 
 <script>
+    
 let allWords = [
     ["I am surprised", 		"estoy sorprendido"],
 ["I am dead tired", 		"estoy muerto"],
@@ -143,6 +265,16 @@ let allWords = [
 ["I am in the city", 		"estoy en la ciudad"],
 ["I am thirsty", 		"tengo sed"],
 ["I am hungry", 		"tengo hambre"],
+
+["I am bored",              "estoy aburrido"],
+["I am excited",           "estoy emocionado"],
+["I am worried",           "estoy preocupado"],
+["I am nervous",           "estoy nervioso"],
+["I am calm",              "estoy tranquilo"],
+["I am busy",              "estoy ocupado"],
+["I am hot (temperature)", "tengo calor"],
+["I am cold (temperature)","tengo frío"],
+
 ];
 
 let L = [];
@@ -152,6 +284,13 @@ let feil = 0;
 let index = 0;
 
 function startGame(n) {
+
+    /*UTVIDELSE*/
+    document.getElementById("ad-banner").style.display = "none";
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("theory").style.display = "none";
+
+
     document.getElementById("levels").style.display = "none";
 
     riktig = 0;

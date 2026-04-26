@@ -22,6 +22,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: calc(48px + env(safe-area-inset-top)); /* ← UTVIDELSE (reklame) */
+
 }
 
 
@@ -84,12 +86,71 @@ body {
     margin-top: 10px;
     font-weight: bold;
 }
+
+
+
+/*UTVIDELSE*/
+#intro, #theory {
+  background: #f5f7fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+#intro, #theory h3 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+/*UTVIDELSE (reklame) */
+#ad-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  background: #eeeeee;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+/*UTVIDELSE (reklame) */
+@media (max-width: 480px) {
+  body {
+    padding-top: calc(56px + env(safe-area-inset-top));
+  }
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- UTVIDELSE (reklame) -->
+<div id="ad-banner">
+  <!-- Reklamekode her -->
+  <span>Advertisement</span>
+</div>
+
+
 <div id="box">
+
+<!-- UTVIDELSE-->
+<div id="intro">
+<h1>Regular Verbs: Present Tense</h1>
+  <h3>About this QUIZ</h3>
+  <p>
+    Each question presents an English verb, and your task is to select the correct Spanish translation.
+  </p>
+  <p>Choose how many words you want to practice (“Elige cuántas palabras”) - and the quiz will start.</p>
+  <p>PS: Before you begin, you may want to read some theory first (at the bottom of the page).</p>
+</div>
+
+
 
 <!-- ALLTID SYNLIG -->
 <div id="progress">
@@ -108,11 +169,89 @@ body {
     <button onclick="startGame(10)">10 palabras</button>
     <button onclick="startGame(20)">20 palabras</button>
 </div>
+<p> </p>
+
 
 <div id="options"></div>
 
 <button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
 
+<!-- UTVIDELSE-->
+<div id="theory">
+  <h3>THEORY</h3>
+
+  <p>
+    In Spanish, regular verbs follow predictable patterns in the present tense.
+    All verbs belong to one of three groups based on their infinitive endings:
+    <strong>-ar</strong>, <strong>-er</strong>, or <strong>-ir</strong>.
+  </p>
+
+  <p>
+    To conjugate a regular verb in the present tense, you remove the infinitive ending
+    and add the correct ending according to the subject.
+    The verb stem does not change.
+  </p>
+
+  <h4>Examples of Regular Verbs</h4>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Hablar (to speak)</th>
+        <th>Comer (to eat)</th>
+        <th>Vivir (to live)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>yo</td>
+        <td>hablo</td>
+        <td>como</td>
+        <td>vivo</td>
+      </tr>
+      <tr>
+        <td>tú</td>
+        <td>hablas</td>
+        <td>comes</td>
+        <td>vives</td>
+      </tr>
+      <tr>
+        <td>él / ella</td>
+        <td>habla</td>
+        <td>come</td>
+        <td>vive</td>
+      </tr>
+      <tr>
+        <td>nosotros</td>
+        <td>hablamos</td>
+        <td>comemos</td>
+        <td>vivimos</td>
+      </tr>
+      <tr>
+        <td>ellos / ellas</td>
+        <td>hablan</td>
+        <td>comen</td>
+        <td>viven</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Because these verbs are regular, the same endings are used for all verbs within
+    each group. Learning these patterns makes it easier to conjugate new verbs
+    and build confidence when using Spanish in the present tense.
+  </p>
+</div>
+
+
+
+
+<!-- UTVIDELSE-->
+<footer style="font-size:12px; color:#666; margin-top:20px;">
+  <p>This quiz is intended for educational purposes.</p>
+  <p>Contact: ohvmam@gmail.com</p>
+</footer>
 </div>
 
 <script>
@@ -174,6 +313,13 @@ let feil = 0;
 let index = 0;
 
 function startGame(n) {
+
+    /*UTVIDELSE*/
+    document.getElementById("ad-banner").style.display = "none";
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("theory").style.display = "none";
+
+
     document.getElementById("levels").style.display = "none";
 
     riktig = 0;

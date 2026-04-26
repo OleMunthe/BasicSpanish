@@ -22,6 +22,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: calc(48px + env(safe-area-inset-top)); /* ← UTVIDELSE (reklame) */
+
 }
 
 
@@ -84,12 +86,71 @@ body {
     margin-top: 10px;
     font-weight: bold;
 }
+
+
+
+/*UTVIDELSE*/
+#intro, #theory {
+  background: #f5f7fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+#intro, #theory h3 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+/*UTVIDELSE (reklame) */
+#ad-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  background: #eeeeee;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+/*UTVIDELSE (reklame) */
+@media (max-width: 480px) {
+  body {
+    padding-top: calc(56px + env(safe-area-inset-top));
+  }
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- UTVIDELSE (reklame) -->
+<div id="ad-banner">
+  <!-- Reklamekode her -->
+  <span>Advertisement</span>
+</div>
+
+
 <div id="box">
+
+<!-- UTVIDELSE-->
+<div id="intro">
+<h1>Spanish Sentences</h1>
+  <h3>About this QUIZ</h3>
+  <p>
+    Each question presents an English expression, and your task is to select the correct Spanish translation.
+  </p>
+  <p>Choose how many words you want to practice (“Elige cuántas palabras”) - and the quiz will start.</p>
+  <p>PS: Before you begin, you may want to read some hints or theory first.</p>
+</div>
+
+
 
 <!-- ALLTID SYNLIG -->
 <div id="progress">
@@ -108,11 +169,45 @@ body {
     <button onclick="startGame(10)">10 palabras</button>
     <button onclick="startGame(20)">20 palabras</button>
 </div>
+<p> </p>
+
 
 <div id="options"></div>
 
 <button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
 
+<!-- UTVIDELSE-->
+<div id="theory">
+  <h3>THEORY</h3>
+
+  <p>
+    In everyday Spanish, many meanings are expressed using short, fixed phrases
+    rather than full grammatical sentences. These expressions are used for greetings,
+    reactions, politeness, and simple communication.
+  </p>
+
+  <p>
+    Some phrases contain verbs in the present tense
+    (<em>creo</em>, <em>entiendo</em>, <em>sé</em>),
+    while others are idiomatic expressions whose meaning should be learned as a whole
+    (such as <em>nos vemos</em>, <em>por supuesto</em>, or <em>de nada</em>).
+  </p>
+
+  <p>
+    Learning these phrases will help you sound more natural in Spanish
+    and manage common situations such as greetings, ordering food,
+    asking for help, and everyday conversations.
+  </p>
+</div>
+
+
+
+
+<!-- UTVIDELSE-->
+<footer style="font-size:12px; color:#666; margin-top:20px;">
+  <p>This quiz is intended for educational purposes.</p>
+  <p>Contact: ohvmam@gmail.com</p>
+</footer>
 </div>
 
 <script>
@@ -150,6 +245,16 @@ let allWords = [
 ["Where is the bathroom?", "¿dónde está el baño?"],
 ["I would like this", 	"me gustaría esto"],
 ["That's all", 		"eso es todo"],
+
+["Sorry",                   "lo siento"],
+["No problem",              "no hay problema"],
+["Just a moment",           "un momento"],
+["Please",                  "por favor"],
+["Thank you very much",     "muchas gracias"],
+["I understand",            "entiendo"],
+["I don't agree",           "no estoy de acuerdo"],
+["That's OK",               "está bien"],
+
 ];
 
 let L = [];
@@ -159,6 +264,13 @@ let feil = 0;
 let index = 0;
 
 function startGame(n) {
+
+    /*UTVIDELSE*/
+    document.getElementById("ad-banner").style.display = "none";
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("theory").style.display = "none";
+
+
     document.getElementById("levels").style.display = "none";
 
     riktig = 0;

@@ -22,6 +22,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-top: calc(48px + env(safe-area-inset-top)); /* ← UTVIDELSE (reklame) */
+
 }
 
 
@@ -84,12 +86,71 @@ body {
     margin-top: 10px;
     font-weight: bold;
 }
+
+
+
+/*UTVIDELSE*/
+#intro, #theory {
+  background: #f5f7fa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 14px;
+  margin-bottom: 16px;
+}
+#intro, #theory h3 {
+  margin-top: 0;
+  font-size: 16px;
+}
+
+/*UTVIDELSE (reklame) */
+#ad-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  background: #eeeeee;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+  z-index: 1000;
+}
+
+/*UTVIDELSE (reklame) */
+@media (max-width: 480px) {
+  body {
+    padding-top: calc(56px + env(safe-area-inset-top));
+  }
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- UTVIDELSE (reklame) -->
+<div id="ad-banner">
+  <!-- Reklamekode her -->
+  <span>Advertisement</span>
+</div>
+
+
 <div id="box">
+
+<!-- UTVIDELSE-->
+<div id="intro">
+<h1>Irregular Verbs: Present Tense</h1>
+  <h3>About this QUIZ</h3>
+  <p>
+    Each question presents an English verb, and your task is to select the correct Spanish translation.
+  </p>
+  <p>Choose how many words you want to practice (“Elige cuántas palabras”) - and the quiz will start.</p>
+  <p>PS: Before you begin, you may want to read some theory first (at the bottom of the page).</p>
+</div>
+
+
 
 <!-- ALLTID SYNLIG -->
 <div id="progress">
@@ -108,16 +169,207 @@ body {
     <button onclick="startGame(10)">10 palabras</button>
     <button onclick="startGame(20)">20 palabras</button>
 </div>
+<p> </p>
+
 
 <div id="options"></div>
 
 <button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
 
+<!-- UTVIDELSE-->
+<div id="theory">
+  <h3>THEORY</h3>
+
+  <p>
+    Unlike regular verbs, irregular verbs in Spanish do not follow a single, predictable
+    pattern in the present tense. Their verb stems or endings may change, and these changes
+    must be learned individually.
+  </p>
+
+  <p>
+    Many of the most common Spanish verbs are irregular. Learning how they are conjugated
+    is essential for understanding and using Spanish in everyday situations.
+  </p>
+
+  <h4>1. Irregular verbs with changes in the “yo” form</h4>
+
+  <p>
+    Some verbs are irregular only in the first person singular (<em>yo</em>).
+    The other forms often follow regular patterns.
+  </p>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Verb</th>
+        <th>yo</th>
+        <th>tú</th>
+        <th>él / ella</th>
+        <th>nosotros</th>
+        <th>ellos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>hacer (to do / make)</td>
+        <td>hago</td>
+        <td>haces</td>
+        <td>hace</td>
+        <td>hacemos</td>
+        <td>hacen</td>
+      </tr>
+      <tr>
+        <td>decir (to say / tell)</td>
+        <td>digo</td>
+        <td>dices</td>
+        <td>dice</td>
+        <td>decimos</td>
+        <td>dicen</td>
+      </tr>
+      <tr>
+        <td>salir (to leave / go out)</td>
+        <td>salgo</td>
+        <td>sales</td>
+        <td>sale</td>
+        <td>salimos</td>
+        <td>salen</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>2. Stem-changing irregular verbs</h4>
+
+  <p>
+    Some irregular verbs change their vowel in the verb stem.
+    These changes usually occur in all forms except <em>nosotros</em>.
+  </p>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Verb</th>
+        <th>yo</th>
+        <th>tú</th>
+        <th>él / ella</th>
+        <th>nosotros</th>
+        <th>ellos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>tener (to have)</td>
+        <td>tengo</td>
+        <td>tienes</td>
+        <td>tiene</td>
+        <td>tenemos</td>
+        <td>tienen</td>
+      </tr>
+      <tr>
+        <td>venir (to come)</td>
+        <td>vengo</td>
+        <td>vienes</td>
+        <td>viene</td>
+        <td>venimos</td>
+        <td>vienen</td>
+      </tr>
+      <tr>
+        <td>saber (to know)</td>
+        <td>sé</td>
+        <td>sabes</td>
+        <td>sabe</td>
+        <td>sabemos</td>
+        <td>saben</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>3. Completely irregular verbs</h4>
+
+  <p>
+    Some verbs are highly irregular and must be memorized.
+    The verb <strong>ir</strong> (to go) is one of the most important examples.
+  </p>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Verb</th>
+        <th>yo</th>
+        <th>tú</th>
+        <th>él / ella</th>
+        <th>nosotros</th>
+        <th>ellos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ir (to go)</td>
+        <td>voy</td>
+        <td>vas</td>
+        <td>va</td>
+        <td>vamos</td>
+        <td>van</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h4>4. The verbs “ser” and “estar” (to be)</h4>
+
+  <p>
+    Spanish has two verbs that mean “to be”: <strong>ser</strong> and <strong>estar</strong>.
+    Both are irregular, but they are used in different situations.
+  </p>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Meaning</th>
+        <th>yo</th>
+        <th>tú</th>
+        <th>él / ella</th>
+        <th>nosotros</th>
+        <th>ellos</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ser</td>
+        <td>soy</td>
+        <td>eres</td>
+        <td>es</td>
+        <td>somos</td>
+        <td>son</td>
+      </tr>
+      <tr>
+        <td>estar (state)</td>
+        <td>estoy</td>
+        <td>estás</td>
+        <td>está</td>
+        <td>estamos</td>
+        <td>están</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>
+    Although irregular verbs do not follow simple rules, practicing the most common ones
+    will greatly improve your ability to understand and use Spanish in the present tense.
+  </p>
+</div>
+
+
+
+
+<!-- UTVIDELSE-->
+<footer style="font-size:12px; color:#666; margin-top:20px;">
+  <p>This quiz is intended for educational purposes.</p>
+  <p>Contact: ohvmam@gmail.com</p>
+</footer>
 </div>
 
 <script>
 let allWords = [
-    ["I do/make", 		"hago"],
+["I do/make", 		"hago"],
 ["we do/make", 		"hacemos"],
 ["you do/make", 		"haces"],
 ["he/she does/makes", 	"hace"],
@@ -181,6 +433,13 @@ let feil = 0;
 let index = 0;
 
 function startGame(n) {
+
+    /*UTVIDELSE*/
+    document.getElementById("ad-banner").style.display = "none";
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("theory").style.display = "none";
+
+
     document.getElementById("levels").style.display = "none";
 
     riktig = 0;
