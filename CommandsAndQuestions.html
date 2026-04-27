@@ -1,69 +1,107 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>¿Qué significa?</title>
 
 <style>
 
-#box {
-    width: 100%;
-    max-width: 420px;
-    padding: 20px;
-    box-sizing: border-box;
+
+
+#pointPopup {
+  position: absolute;
+  margin-top: -10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2ecc71;
+  opacity: 0;
+  transform: translateY(0);
+  pointer-events: none;
+}
+
+#pointPopup.show {
+  animation: floatUp 0.6s ease-out forwards;
+}
+
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(0);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-25px);
+  }
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: white;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding-top: calc(48px + env(safe-area-inset-top)); /* ← UTVIDELSE (reklame) */
-
+  font-family: Arial, sans-serif;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-
-#levels button {
-    margin-right: 10px;
-    padding: 10px 14px;
-    font-size: 15px;
+#ad-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  background: #eee;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Svaralternativer */
-.option {
-    display: block;
-    margin-top: 10px;
-    padding: 14px;
-    border: 2px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
-    background: #fafafa;
-    transition: background 0.2s, border 0.2s;
+#box {
+  max-width: 420px;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  margin-top: 60px;
 }
 
-.option:hover {
-    background: #f0f0f0;
+/* skjult ved start */
+#levels, #question, #answer, #responderBtn, #mcOptions, #nextBtn {
+  display: none;
 }
 
-.option.correct {
-    background: #d4f8d4;
-    border-color: #2ecc71;
-}
-
-.option.wrong {
-    background: #f8d4d4;
-    border-color: #e74c3c;
-}
-
+#levels button,
+#modeSelect button,
+#mcOptions button,
 #nextBtn {
-    margin-top: 18px;
-    padding: 10px 18px;
-    font-size: 16px;
-    display: none;
+  padding: 10px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+#mcOptions button {
+  background: #fafafa;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#mcOptions button.correct {
+  background: #d4f8d4;
+  border-color: #2ecc71;
+}
+
+#mcOptions button.wrong {
+  background: #f8d4d4;
+  border-color: #e74c3c;
+}
+
+#feedback {
+  margin-top: 10px;
+  font-weight: bold;
 }
 
 /* Progressbar */
@@ -82,12 +120,15 @@ body {
     transition: width 0.3s;
 }
 
-#feedback {
-    margin-top: 10px;
-    font-weight: bold;
+#answer.correct {
+  border: 2px solid #2ecc71;
+  background: #eafaf1;
 }
 
-
+#answer.wrong {
+  border: 2px solid #e74c3c;
+  background: #fdecea;
+}
 
 /*UTVIDELSE*/
 #intro, #theory {
@@ -118,13 +159,21 @@ body {
   z-index: 1000;
 }
 
+button:hover {
+  opacity: 0.9;
+}
+
+button {
+  border-radius: 10px;
+  font-size: 16px;
+}
+
 /*UTVIDELSE (reklame) */
 @media (max-width: 480px) {
   body {
     padding-top: calc(56px + env(safe-area-inset-top));
   }
 }
-
 </style>
 </head>
 
@@ -146,8 +195,8 @@ body {
   <p>
     Each question presents an English expression, and your task is to select the correct Spanish translation.
   </p>
-  <p>Choose how many words you want to practice (“Elige cuántas palabras”) - and the quiz will start.</p>
-  <p>PS: Before you begin, you may want to read some theory first (at the bottom of the page).</p>
+  <p>First choose a mode, then select how many expressions you want to practice — and the quiz will start.</p>
+  <p>PS: Before you begin, you may want to read the theory first (at the bottom of the page).</p>
 </div>
 
 
@@ -158,27 +207,45 @@ body {
 </div>
 
 <p id="stats"></p>
-<p id="feedback"></p>
 <p id="final"></p>
 
-<h2 id="title">¿Qué significa?</h2>
 
-<p id="question"><strong>Elige cuántas palabras</strong></p>
+
+
+<p id="modeTitle"><strong>Elige el modo</strong></p>
+<div id="modeSelect">
+  <button onclick="setMode('mc')">Multiple Choice</button>
+  <button onclick="setMode('write')">Write the Answer</button>
+</div>
+
+<p id="question"></p>
 
 <div id="levels">
-    <button onclick="startGame(10)">10 palabras</button>
-    <button onclick="startGame(20)">20 palabras</button>
+  <button onclick="startGame(10)">10 frases</button>
+  <button onclick="startGame(20)">20 frases</button>
 </div>
-<p> </p>
+
+<input id="answer" placeholder="Tu respuesta">
+<div id="pointPopup">+1 point</div>
+<p></p>
+<button id="responderBtn" onclick="checkAnswer()">Responder</button>
 
 
-<div id="options"></div>
 
-<button id="nextBtn" onclick="nextQuestion()">Siguiente pregunta</button>
+<div id="mcOptions">
+  <button onclick="checkMC(0)" id="opt0"></button>
+  <button onclick="checkMC(1)" id="opt1"></button>
+  <button onclick="checkMC(2)" id="opt2"></button>
+  <button onclick="checkMC(3)" id="opt3"></button>
+</div>
+
+<button id="nextBtn" onclick="nextQuestion()">Continue</button>
+
+<p id="feedback"></p>
 
 <!-- UTVIDELSE-->
 <div id="theory">
-  <h3>THEORY</h3>
+   <h3>THEORY</h3>
 
   <p>
     Not everything in Spanish is built word by word from grammar rules.
@@ -208,11 +275,29 @@ body {
   <p>This quiz is intended for educational purposes.</p>
   <p>Contact: ohvmam@gmail.com</p>
 </footer>
+
 </div>
 
+
+
+
+
 <script>
-    
+
+
+
+
+function normalize(str) {
+  return str
+    .toLowerCase()
+    .normalize("NFD")               // splitter à → a + ´
+    .replace(/[\u0300-\u036f]/g, ""); // fjerner aksent
+}
+
+
+let mode = null;
 let allWords = [
+
     ["Have a good trip", 		"buen viaje"],
 ["Be careful", 			"ten cuidado"],
 ["Good luck", 			"buena suerte"],
@@ -247,116 +332,284 @@ let allWords = [
 ["What do you want to do?", 			"qué quieres hacer"],
 ["Why not?", 				"por qué no"],
 ["Is there a shop nearby?",		"hay una tienda cerca de aquí"]
-
 ];
 
 let L = [];
+let index = 0;
 let total = 0;
 let riktig = 0;
 let feil = 0;
-let index = 0;
+let waitForNext = false;
+let awaitingCorrectWrite = false;
+
+const answerInput = document.getElementById("answer");
+answerInput.addEventListener("keypress", function(e) {
+  if (e.key === "Enter") {
+    checkAnswer();
+  }
+});
+
+function shuffle(array) {
+  const a = [...array]; // kopierer arrayet, så originalen ikke endres
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+
+function setMode(m) {
+  mode = m;
+
+  document.getElementById("modeSelect").style.display = "none";
+  document.getElementById("modeTitle").style.display = "none";
+  document.getElementById("levels").style.display = "block";
+  document.getElementById("ad-banner").style.display = "none";
+}
+
+
+
+function updateProgress() {
+    const done = startTotal - L.length;
+    const percent = (done / startTotal) * 100;
+    document.getElementById("progressBar").style.width = percent + "%";
+}
+
+
+let startTotal = 0;
 
 function startGame(n) {
+    
+startTotal = n;
+    riktig = 0;
+    feil = 0;
+
+     L = shuffle(allWords).slice(0, n);
+
+    updateStats();
+
+    document.getElementById("progressBar").style.width = "0%";
 
     /*UTVIDELSE*/
     document.getElementById("ad-banner").style.display = "none";
     document.getElementById("intro").style.display = "none";
     document.getElementById("theory").style.display = "none";
 
+  document.getElementById("levels").style.display = "none";
+  document.getElementById("question").style.display = "block";
+  document.getElementById("feedback").innerText = "";
 
-    document.getElementById("levels").style.display = "none";
+  if (mode === "write") {
+    answerInput.style.display = "block";
+    document.getElementById("responderBtn").style.display = "block";
+    
+    
+  } else {
+    document.getElementById("mcOptions").style.display = "block";
+  }
 
-    riktig = 0;
-    feil = 0;
-
-    L = [...allWords]
-        .sort(() => Math.random() - 0.5)
-        .slice(0, n);
-
-    total = L.length;
-
-    updateProgress();
-    updateStats();
-
-    nextQuestion();
+  nextQuestion();
 }
 
 function nextQuestion() {
-    document.getElementById("nextBtn").style.display = "none";
-    document.getElementById("feedback").innerText = "";
+    
+if (waitForNext) {
+    L.splice(index, 1);
+    updateProgress();
+    answerInput.value = "";
+    waitForNext = false;
+  }
 
+  document.getElementById("feedback").innerText = "";
+  document.getElementById("nextBtn").style.display = "none";
+
+  
+if (mode === "write") {
+  document.getElementById("responderBtn").style.display = "block";
+} else {
+  document.getElementById("responderBtn").style.display = "none";
+}
+
+  
+  awaitingCorrectWrite = false;
+
+ 
     if (L.length === 0) {
-    document.getElementById("options").innerHTML = "";
-    document.getElementById("question").style.display = "none";
-    document.getElementById("title").style.display = "none";
-    document.getElementById("nextBtn").style.display = "none";
+     const percent = Math.round((riktig / (riktig + feil)) * 100);
 
-    document.getElementById("final").innerText =
-        "Puntuación final: " +
-        Math.round(100 * riktig / (riktig + feil)) + "%";
+     document.getElementById("question").innerText = "🏁 ¡Terminado!";
+     document.getElementById("final").innerText =
+    `Resultado final: ${percent} % (${riktig} correctas, ${feil} incorrectas)`;
+
+    document.getElementById("progressBar").style.width = "100%";
     return;
-}
-
-    index = Math.floor(Math.random() * L.length);
-    document.getElementById("question").innerText =
-        `¿Qué significa "${L[index][0]}"?`;
-
-    showOptions();
-}
-
-function showOptions() {
-    const options = document.getElementById("options");
-    options.innerHTML = "";
-
-    const correct = L[index][1];
-
-    let wrong = allWords
-        .map(w => w[1])
-        .filter(w => w !== correct)
-        .sort(() => Math.random() - 0.5)
-        .slice(0, 3);
-
-    [correct, ...wrong]
-        .sort(() => Math.random() - 0.5)
-        .forEach(text => {
-            let div = document.createElement("div");
-            div.className = "option";
-            div.innerText = text;
-            div.onclick = () =>
-                selectOption(div, text === correct);
-            options.appendChild(div);
-        });
-}
-
-function selectOption(el, correct) {
-    document
-        .querySelectorAll(".option")
-        .forEach(o => o.onclick = null);
-
-    if (correct) {
-        el.classList.add("correct");
-        riktig++;
-        L.splice(index, 1);
-        document.getElementById("feedback").innerText = "¡Correcto!";
-
-        updateProgress(); // ✅ OPPDATERES MED EN GANG
-    } else {
-        el.classList.add("wrong");
-        feil++;
-        document.getElementById("feedback").innerText =
-            "Respuesta correcta: " + L[index][1];
     }
 
+
+  index = Math.floor(Math.random() * L.length);
+  document.getElementById("question").innerText =
+    `¿Qué significa "${L[index][0]}"?`;
+
+  if (mode === "mc") {
+    setupMC();
+  } else {
+    answerInput.value = "";
+    answerInput.focus();
+  }
+}
+
+function levenshtein(a, b) {
+  const m = a.length;
+  const n = b.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = Math.min(
+        dp[i - 1][j] + 1,                       // sletting
+        dp[i][j - 1] + 1,                       // innsetting
+        dp[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1) // bytte
+      );
+    }
+  }
+  return dp[m][n];
+}
+
+
+function setupMC() {
+  let correct = L[index][1];
+  let options = [correct];
+
+  while (options.length < 4) {
+    let r = allWords[Math.floor(Math.random() * allWords.length)][1];
+    if (!options.includes(r)) options.push(r);
+  }
+
+  options = shuffle(options);
+  options.forEach((o,i) => {
+    let btn = document.getElementById("opt"+i);
+    btn.innerText = o;
+    btn.className = "";
+    btn.disabled = false;
+  });
+}
+
+function checkMC(i) {
+  let btn = document.getElementById("opt"+i);
+  let correct = L[index][1];
+
+  document.querySelectorAll("#mcOptions button").forEach(b => b.disabled = true);
+
+  if (btn.innerText === correct) {
+    btn.classList.add("correct");
+    riktig++;
+    L.splice(index, 1); // fjernes bare ved riktig
+    updateProgress();
+  } else {
+    btn.classList.add("wrong");
+    feil++;
+    document.querySelectorAll("#mcOptions button")
+      .forEach(b => {
+        if (b.innerText === correct) b.classList.add("correct");
+      });
+  }
     updateStats();
 
-    document.getElementById("nextBtn").style.display = "block";
+  
+document.getElementById("nextBtn").style.display = "block";
+document.getElementById("responderBtn").style.display = "none";
+
 }
 
-function updateProgress() {
-    let done = total - L.length;
-    document.getElementById("progressBar").style.width =
-        Math.round(100 * done / total) + "%";
+
+
+function checkAnswer() {
+  const feedback = document.getElementById("feedback");
+  answerInput.classList.remove("correct", "wrong");
+  document.getElementById("nextBtn").style.display = "none";
+  waitForNext = false;
+
+  const userRaw = answerInput.value.trim();
+  const correctRaw = L[index][1];
+
+  const userNorm = normalize(userRaw);
+  const correctNorm = normalize(correctRaw);
+  const distance = levenshtein(userNorm, correctNorm);
+
+  // ✅ 1. Perfekt riktig → auto videre
+if (userRaw === correctRaw) {
+  riktig++;
+  answerInput.classList.add("correct");
+
+  feedback.innerHTML = `✅ <strong>Correct!</strong>`;
+  feedback.style.color = "#2ecc71";
+
+  document.getElementById("responderBtn").style.display = "none";
+
+  // ✅ Vis +1 point
+  const popup = document.getElementById("pointPopup");
+  popup.classList.remove("show"); // reset animasjon
+  void popup.offsetWidth;         // tving reflow
+  popup.classList.add("show");
+
+  updateStats();
+  updateProgress();
+
+  setTimeout(() => {
+    feedback.innerText = "";
+    answerInput.value = "";
+    L.splice(index, 1);
+    updateProgress();
+    nextQuestion();
+  }, 1000);
+
+  return;
 }
+
+
+  // ⚠️ 2. Nesten riktig (aksent / case)
+  if (userNorm === correctNorm) {
+    riktig++;
+    document.getElementById("responderBtn").style.display = "none";
+    waitForNext = true;
+    answerInput.classList.add("correct");
+    feedback.innerHTML =
+      `⚠️ Almost correct! 🧐 <br><small>You forgot the accent: <strong>${correctRaw}</strong></small>`;
+  }
+
+  // ⚠️ 3. Nesten riktig (én stavefeil)
+  else if (distance === 1) {
+    riktig++;
+    document.getElementById("responderBtn").style.display = "none";
+    waitForNext = true;
+    answerInput.classList.add("correct");
+    feedback.innerHTML =
+      `⚠️ Almost correct! 🧐<br><small>Minor spelling mistake. Correct answer: <strong>${correctRaw}</strong></small>`;
+  }
+
+  // ❌ 4. Feil
+  else {
+    feil++;
+    answerInput.classList.add("wrong");
+    feedback.innerHTML =
+      `❌ Incorrect. ✍️Write the correct answer: <strong>${correctRaw}</strong>`;
+    feedback.style.color = "red";
+    updateStats();
+    return;
+  }
+
+  // Felles for nesten-riktig
+  updateStats();
+  updateProgress();
+  document.getElementById("nextBtn").style.display = "block";
+}
+
+
+
 
 function updateStats() {
     document.getElementById("stats").innerText =
