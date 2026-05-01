@@ -26,7 +26,7 @@
 }
 
 #pointPopup.show {
-  animation: floatUp 0.6s ease-out forwards;
+  animation: floatUp 1.0s ease-out forwards;
 }
 
 @keyframes floatUp {
@@ -179,8 +179,19 @@ button {
     padding-top: calc(56px + env(safe-area-inset-top));
   }
 }
+
+
+.q-line {
+  margin-bottom: 8px;   /* mellomrom mellom linjene */
+}
+
+.q-word {
+  font-size: 20px;      /* valgfritt: gjør uttrykket større */
+}
+
 </style>
 </head>
+
 
 <body>
 
@@ -333,14 +344,22 @@ button {
 
 <script>
 
-
-
-
 function normalize(str) {
   return str
     .toLowerCase()
-    .normalize("NFD")               // splitter à → a + ´
-    .replace(/[\u0300-\u036f]/g, ""); // fjerner aksent
+    .normalize("NFD")                        // fjerner aksenter
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[.,!?¿¡]/g, "")               // fjerner tegnsetting
+    .replace(/\s+/g, " ")                   // rydder opp dobbel mellomrom
+    .trim();
+}
+
+function stripPunctuation(str) {
+  return str
+    .toLowerCase()
+    .replace(/[.,!?¿¡]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 
@@ -394,7 +413,6 @@ let allWords = [
 ["he/she can", 	"puede"],
 ["they can", 		"pueden"],
 ];
-
 let L = [];
 let index = 0;
 let total = 0;
@@ -509,8 +527,14 @@ if (mode === "write") {
 
 
   index = Math.floor(Math.random() * L.length);
-  document.getElementById("question").innerText =
-    `¿Qué significa "${L[index][0]}"?`;
+  
+
+document.getElementById("question").innerHTML = `
+  <div class="q-line">¿Qué significa?</div>
+  <div class="q-word"><strong>"${L[index][0]}"</strong></div>
+`;
+
+
 
   if (mode === "mc") {
     setupMC();
@@ -602,7 +626,7 @@ function checkAnswer() {
   const distance = levenshtein(userNorm, correctNorm);
 
   // ✅ 1. Perfekt riktig → auto videre
-if (userRaw === correctRaw) {
+if (stripPunctuation(userRaw) === stripPunctuation(correctRaw)) {
   riktig++;
   answerInput.classList.add("correct");
 
@@ -639,7 +663,7 @@ if (userRaw === correctRaw) {
     waitForNext = true;
     answerInput.classList.add("correct");
     feedback.innerHTML =
-      `⚠️ Almost correct! 🧐 <br><small>You forgot the accent: <strong>${correctRaw}</strong></small>`;
+      `⚠️ Almost correct! 🧐 <br><small>You made a mistake with the accent: <strong>${correctRaw}</strong></small>`;
   }
 
   // ⚠️ 3. Nesten riktig (én stavefeil)
@@ -670,30 +694,12 @@ if (userRaw === correctRaw) {
 }
 
 
-
-
 function updateStats() {
+    const remaining = startTotal - riktig;
     document.getElementById("stats").innerText =
-        `Aciertos: ${riktig} | Errores: ${feil} | Restantes: ${L.length}`;
+        `✅Aciertos: ${riktig} | ❌Errores: ${feil} | Restantes: ${remaining}`;
 }
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-   
