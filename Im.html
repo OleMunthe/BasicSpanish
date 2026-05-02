@@ -261,7 +261,7 @@ button {
 
 <!-- UTVIDELSE-->
 <div id="theory">
- <h3>THEORY</h3>
+  <h3>THEORY</h3>
 
   <p>
     In Spanish, feelings, states, and conditions are expressed using different verbs.
@@ -269,17 +269,62 @@ button {
     Choosing the correct verb is essential, as the meaning can change completely.
   </p>
 
+  <div style="margin-top:12px; padding:10px; background:#eef2f7; border-left:4px solid #4a6fa5; font-size:14px;">
+  <strong>Quick tip:</strong><br>
+  📍 <strong>estar</strong> = how you feel / where you are<br>
+  🧬 <strong>ser</strong> = who you are / what defines you<br>
+  🍽️ <strong>tener</strong> = hunger, thirst, temperature
+</div>
+
   <h4>1. Using <em>estar</em> for temporary states</h4>
 
   <p>
-    The verb <strong>estar</strong> is used for temporary states, emotions, physical conditions,
-    and locations.
+    The verb <strong>estar</strong> is used for temporary states, emotions,
+    physical conditions, and locations.
   </p>
 
-  <p>
-    Examples: <em>estoy cansado</em> (I am tired), <em>estoy feliz</em> (I am happy),
-    <em>estoy enfermo</em> (I am sick), <em>estoy en casa</em> (I am at home)
-  </p>
+  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+    <tr>
+      <th>English</th>
+      <th>Spanish</th>
+    </tr>
+    <tr>
+      <td>I am tired</td>
+      <td><strong>estoy cansado</strong></td>
+    </tr>
+    <tr>
+      <td>I am happy</td>
+      <td><strong>estoy feliz</strong></td>
+    </tr>
+    <tr>
+      <td>I am sad</td>
+      <td><strong>estoy triste</strong></td>
+    </tr>
+    <tr>
+      <td>I am sick</td>
+      <td><strong>estoy enfermo</strong></td>
+    </tr>
+    <tr>
+      <td>I am angry</td>
+      <td><strong>estoy enfadado</strong></td>
+    </tr>
+    <tr>
+      <td>I am bored</td>
+      <td><strong>estoy aburrido</strong></td>
+    </tr>
+    <tr>
+      <td>I am worried</td>
+      <td><strong>estoy preocupado</strong></td>
+    </tr>
+    <tr>
+      <td>I am at home</td>
+      <td><strong>estoy en casa</strong></td>
+    </tr>
+    <tr>
+      <td>I am on vacation</td>
+      <td><strong>estoy de vacaciones</strong></td>
+    </tr>
+  </table>
 
   <h4>2. Using <em>ser</em> for permanent characteristics</h4>
 
@@ -288,20 +333,54 @@ button {
     such as identity, personality, or inherent qualities.
   </p>
 
-  <p>
-    Example: <em>soy rico</em> (I am rich)
-  </p>
+  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+    <tr>
+      <th>English</th>
+      <th>Spanish</th>
+    </tr>
+    <tr>
+      <td>I am rich</td>
+      <td><strong>soy rico</strong></td>
+    </tr>
+    <tr>
+      <td>I am Spanish</td>
+      <td><strong>soy español</strong></td>
+    </tr>
+    <tr>
+      <td>I am a student</td>
+      <td><strong>soy estudiante</strong></td>
+    </tr>
+  </table>
 
-  <h4>3. Using <em>tener</em> for physical needs</h4>
+  <h4>3. Using <em>tener</em> for physical needs and sensations</h4>
 
   <p>
-    In Spanish, physical needs such as hunger and thirst are expressed using
+    In Spanish, physical needs and sensations are often expressed using
     the verb <strong>tener</strong>, not <em>estar</em>.
   </p>
 
-  <p>
-    Examples: <em>tengo hambre</em> (I am hungry), <em>tengo sed</em> (I am thirsty)
-  </p>
+  <table border="1" cellpadding="6" cellspacing="0" width="100%">
+    <tr>
+      <th>English</th>
+      <th>Spanish</th>
+    </tr>
+    <tr>
+      <td>I am hungry</td>
+      <td><strong>tengo hambre</strong></td>
+    </tr>
+    <tr>
+      <td>I am thirsty</td>
+      <td><strong>tengo sed</strong></td>
+    </tr>
+    <tr>
+      <td>I am cold (temperature)</td>
+      <td><strong>tengo frío</strong></td>
+    </tr>
+    <tr>
+      <td>I am hot (temperature)</td>
+      <td><strong>tengo calor</strong></td>
+    </tr>
+  </table>
 
   <p>
     Learning which verb to use will help you sound more natural
@@ -488,7 +567,7 @@ if (mode === "write") {
 
      document.getElementById("question").innerText = "🏁 ¡Terminado!";
      document.getElementById("final").innerText =
-    `Resultado final: ${percent} % (${riktig} correctas, ${feil} incorrectas)`;
+    `Resultado final: ${percent} %`;
 
     document.getElementById("progressBar").style.width = "100%";
     return;

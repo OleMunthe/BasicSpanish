@@ -261,25 +261,138 @@ button {
 
 <!-- UTVIDELSE-->
 <div id="theory">
-   <h3>THEORY</h3>
+  <h3>THEORY</h3>
 
   <p>
-    Not everything in Spanish is built word by word from grammar rules.
-    Many everyday expressions must be learned as fixed phrases.
+    In this quiz you practice <strong>commands, questions, and short spoken expressions</strong>.
+    Many of them follow clear patterns — especially imperatives and object pronouns —
+    while others should simply be memorized.
   </p>
 
-  <p>
-    In this quiz, you will practice common expressions used in daily conversation,
-    such as greetings, questions, polite requests, and short commands.
-    Some of these phrases include verbs in the imperative form
-    (for example <em>ten cuidado</em>, <em>cuídate</em>),
-    while others are complete expressions whose meaning should be learned as a whole
-    (such as <em>buen viaje</em> or <em>buena suerte</em>).
-  </p>
+  <!-- DEL 1 -->
+  <h4>1. Fixed expressions you should memorize</h4>
 
   <p>
-    Learning these expressions will help you sound more natural in Spanish
-    and understand spoken language more easily.
+    Some expressions are complete phrases and are not built freely from grammar.
+    They are used as they are.
+  </p>
+
+  <ul>
+    <li><strong>buen viaje</strong> – Have a good trip</li>
+    <li><strong>buena suerte</strong> – Good luck</li>
+    <li><strong>felicidades</strong> – Congratulations</li>
+    <li><strong>tienes razón</strong> – You are right</li>
+    <li><strong>qué pasa?</strong> – What's happening?</li>
+  </ul>
+
+  <p>
+    👉 These phrases should be learned as whole units.
+  </p>
+
+  <!-- DEL 2 -->
+  <h4>2. Positive commands (imperative)</h4>
+
+<p>
+  Positive commands tell someone to do something.
+  Even though the command is directed at <em>you</em> (<strong>tú</strong>),
+  Spanish does <strong>not</strong> use the normal <em>-s</em> ending.
+  Instead, positive commands use the
+  <strong>third person singular form</strong> (él/ella).
+</p>
+
+<p>
+  For example: <br>
+  <em>hablas</em> = you speak ❌ (statement) <br>
+  <strong>habla</strong> = speak! ✅ (command)
+</p>
+
+  <p>More examples:</p>
+  <ul>
+    <li><strong>escucha</strong> – listen</li>
+    <li><strong>espera</strong> – wait</li>
+    <li><strong>repite</strong> – repeat</li>
+    <li><strong>pasa</strong> – come in</li>
+  </ul>
+
+
+  <!-- DEL 3 -->
+  <h4>3. Negative commands: pronoun before the verb</h4>
+
+  <p>
+    Negative commands always use:
+  </p>
+
+  <ul>
+    <li><strong>no</strong> + pronoun + verb</li>
+    <li>a form similar to the present subjunctive</li>
+  </ul>
+
+  <p>
+    Compare the following:
+  </p>
+
+  <ul>
+    <li><strong>Ayúdame</strong> – Help me ✅</li>
+    <li><strong>No me ayudes</strong> – Don’t help me ❌</li>
+  </ul>
+
+  <p>
+    Notice what changes:
+  </p>
+
+  <ul>
+    <li><strong>me</strong> moves <strong>before</strong> the verb</li>
+    <li><strong>ayuda → ayudes</strong> (‑a → ‑es)</li>
+  </ul>
+
+  <p>
+    More examples from the quiz:
+  </p>
+
+  <ul>
+    <li><strong>No me lo des</strong> – Don’t give it to me</li>
+    <li><strong>No lo pruebes</strong> – Don’t try it</li>
+    <li><strong>No lo repitas</strong> – Don’t repeat it</li>
+    <li><strong>No escuches</strong> – Don’t listen</li>
+  </ul>
+
+
+
+  <!-- DEL 4 -->
+  <h4>4. Adding pronouns to the end of commands (‑me, ‑lo, ‑la)</h4>
+
+  <p>
+    With <strong>positive commands</strong>, object pronouns are attached
+    to the <strong>end of the verb</strong>.
+  </p>
+
+  <ul>
+    <li><strong>ayuda</strong> → <strong>ayúdame</strong> (Help me)</li>
+    <li><strong>da</strong> → <strong>dame</strong> (Give me)</li>
+    <li><strong>da</strong> + <strong>lo</strong> → <strong>dámelo</strong> (Give it to me)</li>
+    <li><strong>repite</strong> → <strong>repítelo</strong> (Repeat it)</li>
+    <li><strong>prueba</strong> → <strong>pruébalo</strong> (Try it)</li>
+  </ul>
+
+  <p>
+    👉 When pronouns are added, the verb often gets an <strong>accent mark</strong>
+    to keep the original stress.
+  </p>
+
+
+
+  <!-- DEL 5 -->
+  <h4>5. Quick summary</h4>
+
+  <ul>
+    <li>✅ Positive command + pronoun → pronoun <strong>attached</strong></li>
+    <li>❌ Negative command → pronoun <strong>before</strong> the verb</li>
+    <li>❌ Negative commands often change: <strong>-a → -es</strong></li>
+  </ul>
+
+  <p>
+    Mastering these patterns will help you understand and produce natural Spanish
+    commands very quickly.
   </p>
 </div>
 
@@ -323,7 +436,7 @@ function stripPunctuation(str) {
 let mode = null;
 let allWords = [
 
-    ["Have a good trip", 		"buen viaje"],
+["Have a good trip", 		"buen viaje"],
 ["Be careful", 			"ten cuidado"],
 ["Good luck", 			"buena suerte"],
 ["Take care", 			"cuídate"],
@@ -356,7 +469,44 @@ let allWords = [
 ["What time is it?", 			"qué hora es"],
 ["What do you want to do?", 			"qué quieres hacer"],
 ["Why not?", 				"por qué no"],
-["Is there a shop nearby?",		"hay una tienda cerca de aquí"]
+["Is there a shop nearby?",		"hay una tienda cerca de aquí"],
+["Hvor er stranda?", 		"donde está la playa"],
+
+
+["hjelp",                "ayuda"],
+["hjelp meg",            "ayúdame"],
+["ikke hjelp meg",       "no me ayudes"],
+["gi meg",               "dame"],
+["gi meg den",           "dámelo"],
+["ikke gi meg den",      "no me lo des"],
+["lær meg",              "enséñame"],
+["lær meg det",          "enséñamelo"],
+["ikke lær meg det",     "no me enseñes"],
+["prøv det",             "pruébalo"],
+["ikke prøv det",        "no lo pruebes"],
+["gjenta",               "repite"],
+["gjenta det",           "repítelo"],
+["ikke gjenta det",      "no lo repitas"],
+["hør etter",            "escucha"],
+["ikke hør etter",       "no escuches"],
+["stopp",                "para"],
+["hør",                  "oye"],
+["si meg",               "dime"],
+["fortell meg",          "cuéntame"],
+["forklar",              "explica"],
+["snakk",                "habla"],
+["oversett",             "traduce"],
+["åpne",                 "abre"],
+["lukk",                 "cierra"],
+["hold kjeft",           "cállate"],
+["følg meg",             "sígueme"],
+["vent på meg",          "espérame"],
+["rengjør det",          "límpialo"],
+["sving",                "dobla"],
+["slå på",               "enciende"],
+["slå av",               "apaga"]
+
+
 ];
 let L = [];
 let index = 0;
@@ -464,7 +614,7 @@ if (mode === "write") {
 
      document.getElementById("question").innerText = "🏁 ¡Terminado!";
      document.getElementById("final").innerText =
-    `Resultado final: ${percent} % (${riktig} correctas, ${feil} incorrectas)`;
+    `Resultado final: ${percent} %`;
 
     document.getElementById("progressBar").style.width = "100%";
     return;
