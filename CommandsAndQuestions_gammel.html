@@ -16,41 +16,30 @@
 
 #pointPopup {
   position: absolute;
-  margin-top: -12px;
-  padding: 7px 12px;
-  font-size: 22px;
-  font-weight: 800;
-  color: #168a46;
-  background: #eafaf1;
-  border: 2px solid #2ecc71;
-  border-radius: 999px;
-  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.28);
+  margin-top: -10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2ecc71;
   opacity: 0;
-  transform: translateY(0) scale(0.85);
+  transform: translateY(0);
   pointer-events: none;
-  z-index: 20;
 }
 
 #pointPopup.show {
-  animation: floatUp 1.25s ease-out forwards;
+  animation: floatUp 1.0s ease-out forwards;
 }
 
 @keyframes floatUp {
   0% {
     opacity: 0;
-    transform: translateY(4px) scale(0.85);
+    transform: translateY(0);
   }
-  18% {
+  20% {
     opacity: 1;
-    transform: translateY(-4px) scale(1.08);
-  }
-  55% {
-    opacity: 1;
-    transform: translateY(-14px) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translateY(-38px) scale(0.96);
+    transform: translateY(-25px);
   }
 }
 
@@ -217,10 +206,10 @@ button {
 
 <!-- UTVIDELSE-->
 <div id="intro">
-<h1>Verbs in present tense</h1>
+<h1>Commands and Questions</h1>
   <h3>About this QUIZ</h3>
   <p>
-    Each question presents an English verb, and your task is to select the correct Spanish translation.
+    Each question presents an English expression, and your task is to select the correct Spanish translation.
   </p>
   <p>First choose a mode, then select how many expressions you want to practice — and the quiz will start.</p>
   <p>PS: Before you begin, you may want to read the theory first (at the bottom of the page).</p>
@@ -271,125 +260,139 @@ button {
 <p id="feedback"></p>
 
 <!-- UTVIDELSE-->
-<div id="intro">
-<h1>Regular Verbs: Present Tense</h1>
-  <h3>About this QUIZ</h3>
-  <p>
-    Each question presents an English verb, and your task is to select the correct Spanish translation.
-  </p>
-  <p>First choose a mode, then select how many words you want to practice — and the quiz will start.</p>
-  <p>PS: Before you begin, you may want to read the theory first (at the bottom of the page).</p>
-</div>
-
-
-
-<!-- ALLTID SYNLIG -->
-<div id="progress">
-    <div id="progressBar"></div>
-</div>
-
-<p id="stats"></p>
-<p id="final"></p>
-
-
-
-
-<p id="modeTitle"><strong>Elige el modo</strong></p>
-<div id="modeSelect">
-  <button onclick="setMode('mc')">Multiple Choice</button>
-  <button onclick="setMode('write')">Write the Answer</button>
-</div>
-
-<p id="question"></p>
-
-<div id="levels">
-  <button onclick="startGame(10)">10 palabras</button>
-  <button onclick="startGame(20)">20 palabras</button>
-</div>
-
-<input id="answer" placeholder="Tu respuesta">
-<div id="pointPopup">+1 point</div>
-<p></p>
-<button id="responderBtn" onclick="checkAnswer()">Responder</button>
-
-
-
-<div id="mcOptions">
-  <button onclick="checkMC(0)" id="opt0"></button>
-  <button onclick="checkMC(1)" id="opt1"></button>
-  <button onclick="checkMC(2)" id="opt2"></button>
-  <button onclick="checkMC(3)" id="opt3"></button>
-</div>
-
-<button id="nextBtn" onclick="nextQuestion()">Continue</button>
-
-<p id="feedback"></p>
-
-<!-- UTVIDELSE-->
 <div id="theory">
-   <h3>THEORY</h3>
+  <h3>THEORY</h3>
 
   <p>
-    In Spanish, regular verbs follow predictable patterns in the present tense.
-    All verbs belong to one of three groups based on their infinitive endings:
-    <strong>-ar</strong>, <strong>-er</strong>, or <strong>-ir</strong>.
+    In this quiz you practice <strong>commands, questions, and short spoken expressions</strong>.
+    Many of them follow clear patterns — especially imperatives and object pronouns —
+    while others should simply be memorized.
   </p>
 
+  <!-- DEL 1 -->
+  <h4>1. Fixed expressions you should memorize</h4>
+
   <p>
-    To conjugate a regular verb in the present tense, you remove the infinitive ending
-    and add the correct ending according to the subject.
-    The verb stem does not change.
+    Some expressions are complete phrases and are not built freely from grammar.
+    They are used as they are.
   </p>
 
-  <h4>Examples of Regular Verbs</h4>
-
-  <table border="1" cellpadding="6" cellspacing="0">
-    <thead>
-      <tr>
-        <th>Subject</th>
-        <th>Hablar (to speak)</th>
-        <th>Comer (to eat)</th>
-        <th>Vivir (to live)</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>yo</td>
-        <td>hablo</td>
-        <td>como</td>
-        <td>vivo</td>
-      </tr>
-      <tr>
-        <td>tú</td>
-        <td>hablas</td>
-        <td>comes</td>
-        <td>vives</td>
-      </tr>
-      <tr>
-        <td>él / ella</td>
-        <td>habla</td>
-        <td>come</td>
-        <td>vive</td>
-      </tr>
-      <tr>
-        <td>nosotros</td>
-        <td>hablamos</td>
-        <td>comemos</td>
-        <td>vivimos</td>
-      </tr>
-      <tr>
-        <td>ellos / ellas</td>
-        <td>hablan</td>
-        <td>comen</td>
-        <td>viven</td>
-      </tr>
-    </tbody>
-  </table>
+  <ul>
+    <li><strong>buen viaje</strong> – Have a good trip</li>
+    <li><strong>buena suerte</strong> – Good luck</li>
+    <li><strong>felicidades</strong> – Congratulations</li>
+    <li><strong>tienes razón</strong> – You are right</li>
+    <li><strong>qué pasa?</strong> – What's happening?</li>
+  </ul>
 
   <p>
-    Because these verbs are regular, the same endings are used for all verbs within
-    each group. Learning these patterns makes it easier to conjugate new verbs
-    and build confidence when using Spanish in the present tense.
+    👉 These phrases should be learned as whole units.
+  </p>
+
+  <!-- DEL 2 -->
+  <h4>2. Positive commands (imperative)</h4>
+
+<p>
+  Positive commands tell someone to do something.
+  Even though the command is directed at <em>you</em> (<strong>tú</strong>),
+  Spanish does <strong>not</strong> use the normal <em>-s</em> ending.
+  Instead, positive commands use the
+  <strong>third person singular form</strong> (él/ella).
+</p>
+
+<p>
+  For example: <br>
+  <em>hablas</em> = you speak ❌ (statement) <br>
+  <strong>habla</strong> = speak! ✅ (command)
+</p>
+
+  <p>More examples:</p>
+  <ul>
+    <li><strong>escucha</strong> – listen</li>
+    <li><strong>espera</strong> – wait</li>
+    <li><strong>repite</strong> – repeat</li>
+    <li><strong>pasa</strong> – come in</li>
+  </ul>
+
+
+  <!-- DEL 3 -->
+  <h4>3. Negative commands: pronoun before the verb</h4>
+
+  <p>
+    Negative commands always use:
+  </p>
+
+  <ul>
+    <li><strong>no</strong> + pronoun + verb</li>
+    <li>a form similar to the present subjunctive</li>
+  </ul>
+
+  <p>
+    Compare the following:
+  </p>
+
+  <ul>
+    <li><strong>Ayúdame</strong> – Help me ✅</li>
+    <li><strong>No me ayudes</strong> – Don’t help me ❌</li>
+  </ul>
+
+  <p>
+    Notice what changes:
+  </p>
+
+  <ul>
+    <li><strong>me</strong> moves <strong>before</strong> the verb</li>
+    <li><strong>ayuda → ayudes</strong> (‑a → ‑es)</li>
+  </ul>
+
+  <p>
+    More examples from the quiz:
+  </p>
+
+  <ul>
+    <li><strong>No me lo des</strong> – Don’t give it to me</li>
+    <li><strong>No lo pruebes</strong> – Don’t try it</li>
+    <li><strong>No lo repitas</strong> – Don’t repeat it</li>
+    <li><strong>No escuches</strong> – Don’t listen</li>
+  </ul>
+
+
+
+  <!-- DEL 4 -->
+  <h4>4. Adding pronouns to the end of commands (‑me, ‑lo, ‑la)</h4>
+
+  <p>
+    With <strong>positive commands</strong>, object pronouns are attached
+    to the <strong>end of the verb</strong>.
+  </p>
+
+  <ul>
+    <li><strong>ayuda</strong> → <strong>ayúdame</strong> (Help me)</li>
+    <li><strong>da</strong> → <strong>dame</strong> (Give me)</li>
+    <li><strong>da</strong> + <strong>lo</strong> → <strong>dámelo</strong> (Give it to me)</li>
+    <li><strong>repite</strong> → <strong>repítelo</strong> (Repeat it)</li>
+    <li><strong>prueba</strong> → <strong>pruébalo</strong> (Try it)</li>
+  </ul>
+
+  <p>
+    👉 When pronouns are added, the verb often gets an <strong>accent mark</strong>
+    to keep the original stress.
+  </p>
+
+
+
+  <!-- DEL 5 -->
+  <h4>5. Quick summary</h4>
+
+  <ul>
+    <li>✅ Positive command + pronoun → pronoun <strong>attached</strong></li>
+    <li>❌ Negative command → pronoun <strong>before</strong> the verb</li>
+    <li>❌ Negative commands often change: <strong>-a → -es</strong></li>
+  </ul>
+
+  <p>
+    Mastering these patterns will help you understand and produce natural Spanish
+    commands very quickly.
   </p>
 </div>
 
@@ -410,47 +413,6 @@ button {
 
 <script>
 
-// Korte lydeffekter uten eksterne lydfiler.
-// Web Audio starter først etter brukerinteraksjon, som passer fint for quiz-knappene.
-function playQuizSound(type) {
-  const AudioCtx = window.AudioContext || window.webkitAudioContext;
-  if (!AudioCtx) return;
-
-  if (!window.quizAudioCtx) window.quizAudioCtx = new AudioCtx();
-  const ctx = window.quizAudioCtx;
-  if (ctx.state === "suspended") ctx.resume();
-
-  const now = ctx.currentTime;
-
-  function tone(freq, start, duration, volume) {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = "sine";
-    osc.frequency.setValueAtTime(freq, start);
-    gain.gain.setValueAtTime(0.0001, start);
-    gain.gain.exponentialRampToValueAtTime(volume, start + 0.015);
-    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(start);
-    osc.stop(start + duration + 0.02);
-  }
-
-  if (type === "correct") {
-    tone(660, now, 0.12, 0.10);
-    tone(880, now + 0.11, 0.18, 0.11);
-  } else if (type === "wrong") {
-    tone(220, now, 0.18, 0.09);
-    tone(165, now + 0.12, 0.24, 0.08);
-  }
-}
-
-function showPointPopup() {
-  const popup = document.getElementById("pointPopup");
-  popup.classList.remove("show");
-  void popup.offsetWidth;
-  popup.classList.add("show");
-}
 
 function normalize(str) {
   return str
@@ -473,53 +435,76 @@ function stripPunctuation(str) {
 
 let mode = null;
 let allWords = [
- ["I speak", 		"hablo"],
-["we speak", 		"hablamos"],
-["you speak", 		"hablas"],
-["he/she speaks", 	"habla"],
-["they speak", 		"hablan"],
 
-["I eat", 		"como"],
-["we eat", 		"comemos"],
-["you eat", 		"comes"],
-["he/she eats", 	"come"],
-["they eat", 		"comen"],
+["Have a good trip", 		"buen viaje"],
+["Be careful", 			"ten cuidado"],
+["Good luck", 			"buena suerte"],
+["Take care", 			"cuídate"],
+["Wait a moment",		"espera un momento"],
+["Shut up (!)", 		"cállate"],
+["Congratulations", 		"felicidades"],
+["Speak more slowly", 		"habla más despacio"],
+["You are right",		"tienes razón"],
+["Come on",			"venga"],
+["Come in", 			"pasa"],
+["Throw it away",		"tíralo"],
+["Close it",			"ciérralo"],
+["Believe me",			"créeme"],
 
-["I wait", 		"espero"],
-["we wait", 		"esperamos"],
-["you wait", 		"esperas"],
-["he/she waits", 	"espera"],
-["they wait", 		"esperan"],
+["Do you want (it)?",				"quieres"],
+["What's happening?", 				"qué pasa?"],
+["What's your name?",			"cómo te llamas"],
+["What's your name? (formal)",			"cómo se llama"],
+["Is it far?", 				"está lejos"],
+["How are you?", 			"cómo estás"],
+["How much does it cost?", 			"cuánto cuesta"],
+["How do you say – in Spanish?", 	"cómo se dice - en español"],
+["How can I help you?", 		"cómo puedo ayudarte"],
+["Can you help me?", 			"puedes ayudarme"],
+["Can you repeat it?", 			"puedes repetirlo"],
+["Can we come in?", 			"podemos entrar"],
+["Does it hurt?", 			"te duele"],
+["What does it mean?", 			"qué significa"],
+["What is that?", 				"qué es eso"],
+["What time is it?", 			"qué hora es"],
+["What do you want to do?", 			"qué quieres hacer"],
+["Why not?", 				"por qué no"],
+["Is there a shop nearby?",		"hay una tienda cerca de aquí"],
+["Where is the beach?", 		"donde está la playa"],
 
-["I try", 		"intento"],
-["we try", 		"intentamos"],
-["you try", 		"intentas"],
-["he/she tries", 	"intenta"],
-["they try", 		"intentan"],
 
-["I open", 		"abro"],
-["we open", 		"abrimos"],
-["you open", 		"abres"],
-["he/she opens", 	"abre"],
-["they open", 		"abren"],
+["Help",                 "ayuda"],
+["Help me",              "ayúdame"],
+["Don't help me",        "no me ayudes"],
+["Give me",              "dame"],
+["Give it to me",        "dámelo"],
+["Don't give it to me",  "no me lo des"],
+["Teach it to me / show it to me",             "enséñamelo"],
+["Don't teach me",  "no me enseñes"],
+["Try it",               "pruébalo"],
+["Don't try it",         "no lo pruebes"],
+["Repeat",               "repite"],
+["Repeat it",            "repítelo"],
+["Don't repeat it",      "no lo repitas"],
+["Listen",               "escucha"],
+["Don't listen",         "no escuches"],
+["Stop",                 "para"],
+["Listen",               "oye"],
+["Tell me",              "dime"],
+["Tell me about it",     "cuéntame"],
+["Explain",              "explica"],
+["Speak",                "habla"],
+["Translate",            "traduce"],
+["Open",                 "abre"],
+["Close",                "cierra"],
+["Shut up",              "cállate"],
+["Follow me",            "sígueme"],
+["Wait for me",          "espérame"],
+["Clean it",             "límpialo"],
+["Turn",                 "dobla"],
+["Turn on",              "enciende"],
+["Turn off",             "apaga"]
 
-["I see", 		"veo"],
-["we see", 		"vemos"],
-["you see", 		"ves"],
-["he/she sees", 	"ve"],
-["they see", 		"ven"],
-
-["I want", 		"quiero"],
-["we want", 		"queremos"],
-["you want", 		"quieres"],
-["he/she wants", 	"quiere"],
-["they want", 		"quieren"],
-
-["I can", 		"puedo"],
-["we can", 		"podemos"],
-["you can", 		"puedes"],
-["he/she can", 	"puede"],
-["they can", 		"pueden"],
 ];
 let L = [];
 let index = 0;
@@ -700,14 +685,11 @@ function checkMC(i) {
   if (btn.innerText === correct) {
     btn.classList.add("correct");
     riktig++;
-    playQuizSound("correct");
-    showPointPopup();
     L.splice(index, 1); // fjernes bare ved riktig
     updateProgress();
   } else {
     btn.classList.add("wrong");
     feil++;
-    playQuizSound("wrong");
     document.querySelectorAll("#mcOptions button")
       .forEach(b => {
         if (b.innerText === correct) b.classList.add("correct");
@@ -743,12 +725,14 @@ if (stripPunctuation(userRaw) === stripPunctuation(correctRaw)) {
 
   feedback.innerHTML = `✅ <strong>Correct!</strong>`;
   feedback.style.color = "#2ecc71";
-  playQuizSound("correct");
 
   document.getElementById("responderBtn").style.display = "none";
 
-  // ✅ Vis tydelig +1 point
-  showPointPopup();
+  // ✅ Vis +1 point
+  const popup = document.getElementById("pointPopup");
+  popup.classList.remove("show"); // reset animasjon
+  void popup.offsetWidth;         // tving reflow
+  popup.classList.add("show");
 
   updateStats();
   updateProgress();
@@ -789,7 +773,6 @@ if (stripPunctuation(userRaw) === stripPunctuation(correctRaw)) {
   else {
     feil++;
     answerInput.classList.add("wrong");
-    playQuizSound("wrong");
     feedback.innerHTML =
       `❌ Incorrect. ✍️Write the correct answer: <strong>${correctRaw}</strong>`;
     feedback.style.color = "red";

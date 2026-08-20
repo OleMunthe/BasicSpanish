@@ -16,30 +16,41 @@
 
 #pointPopup {
   position: absolute;
-  margin-top: -10px;
-  font-size: 18px;
-  font-weight: bold;
-  color: #2ecc71;
+  margin-top: -12px;
+  padding: 7px 12px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #168a46;
+  background: #eafaf1;
+  border: 2px solid #2ecc71;
+  border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(46, 204, 113, 0.28);
   opacity: 0;
-  transform: translateY(0);
+  transform: translateY(0) scale(0.85);
   pointer-events: none;
+  z-index: 20;
 }
 
 #pointPopup.show {
-  animation: floatUp 1.0s ease-out forwards;
+  animation: floatUp 1.25s ease-out forwards;
 }
 
 @keyframes floatUp {
   0% {
     opacity: 0;
-    transform: translateY(0);
+    transform: translateY(4px) scale(0.85);
   }
-  20% {
+  18% {
     opacity: 1;
+    transform: translateY(-4px) scale(1.08);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(-14px) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translateY(-25px);
+    transform: translateY(-38px) scale(0.96);
   }
 }
 
@@ -206,12 +217,12 @@ button {
 
 <!-- UTVIDELSE-->
 <div id="intro">
-<h1>Verb - Dictionary Form (infinitive)</h1>
+<h1>Verbs in dictionary form</h1>
   <h3>About this QUIZ</h3>
   <p>
     Each question presents an English verb, and your task is to select the correct Spanish translation.
   </p>
-  <p>First choose a mode, then select how many words you want to practice — and the quiz will start.</p>
+  <p>First choose a mode, then select how many expressions you want to practice — and the quiz will start.</p>
   <p>PS: Before you begin, you may want to read the theory first (at the bottom of the page).</p>
 </div>
 
@@ -237,8 +248,8 @@ button {
 <p id="question"></p>
 
 <div id="levels">
-  <button onclick="startGame(10)">10 palabras</button>
-  <button onclick="startGame(20)">20 palabras</button>
+  <button onclick="startGame(10)">10 frases</button>
+  <button onclick="startGame(20)">20 frases</button>
 </div>
 
 <input id="answer" placeholder="Tu respuesta">
@@ -378,6 +389,48 @@ It does <strong>not</strong> show who is doing the action yet.
 
 <script>
 
+// Korte lydeffekter uten eksterne lydfiler.
+// Web Audio starter først etter brukerinteraksjon, som passer fint for quiz-knappene.
+function playQuizSound(type) {
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtx) return;
+
+  if (!window.quizAudioCtx) window.quizAudioCtx = new AudioCtx();
+  const ctx = window.quizAudioCtx;
+  if (ctx.state === "suspended") ctx.resume();
+
+  const now = ctx.currentTime;
+
+  function tone(freq, start, duration, volume) {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    osc.frequency.setValueAtTime(freq, start);
+    gain.gain.setValueAtTime(0.0001, start);
+    gain.gain.exponentialRampToValueAtTime(volume, start + 0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(start);
+    osc.stop(start + duration + 0.02);
+  }
+
+  if (type === "correct") {
+    tone(660, now, 0.12, 0.10);
+    tone(880, now + 0.11, 0.18, 0.11);
+  } else if (type === "wrong") {
+    tone(220, now, 0.18, 0.09);
+    tone(165, now + 0.12, 0.24, 0.08);
+  }
+}
+
+function showPointPopup() {
+  const popup = document.getElementById("pointPopup");
+  popup.classList.remove("show");
+  void popup.offsetWidth;
+  popup.classList.add("show");
+}
+
 function normalize(str) {
   return str
     .toLowerCase()
@@ -395,6 +448,7 @@ function stripPunctuation(str) {
     .replace(/\s+/g, " ")
     .trim();
 }
+
 
 
 
@@ -679,11 +733,14 @@ function checkMC(i) {
   if (btn.innerText === correct) {
     btn.classList.add("correct");
     riktig++;
+    playQuizSound("correct");
+    showPointPopup();
     L.splice(index, 1); // fjernes bare ved riktig
     updateProgress();
   } else {
     btn.classList.add("wrong");
     feil++;
+    playQuizSound("wrong");
     document.querySelectorAll("#mcOptions button")
       .forEach(b => {
         if (b.innerText === correct) b.classList.add("correct");
@@ -719,14 +776,12 @@ if (stripPunctuation(userRaw) === stripPunctuation(correctRaw)) {
 
   feedback.innerHTML = `✅ <strong>Correct!</strong>`;
   feedback.style.color = "#2ecc71";
+  playQuizSound("correct");
 
   document.getElementById("responderBtn").style.display = "none";
 
-  // ✅ Vis +1 point
-  const popup = document.getElementById("pointPopup");
-  popup.classList.remove("show"); // reset animasjon
-  void popup.offsetWidth;         // tving reflow
-  popup.classList.add("show");
+  // ✅ Vis tydelig +1 point
+  showPointPopup();
 
   updateStats();
   updateProgress();
@@ -767,6 +822,7 @@ if (stripPunctuation(userRaw) === stripPunctuation(correctRaw)) {
   else {
     feil++;
     answerInput.classList.add("wrong");
+    playQuizSound("wrong");
     feedback.innerHTML =
       `❌ Incorrect. ✍️Write the correct answer: <strong>${correctRaw}</strong>`;
     feedback.style.color = "red";
