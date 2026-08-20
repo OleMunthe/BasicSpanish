@@ -479,75 +479,133 @@ function stripPunctuation(str) {
 
 let mode = null;
 let allWords = [
- ["See you", 		"nos vemos"],
-["My name is", 		"me llamo"],
-["Good morning", 		"buenos días"],
-["Good afternoon / evening", 	"buena tarde"],
-["Good night", 		"buena noche"],
-["I think so", 		"creo que sí"],
-["Of course", 		"por supuesto"],
-["That sounds good", 	"suena bien"],
-["That sounds bad", 		"suena mal"],
-["Excuse me", 		"perdón"],
-["You're welcome", 	"de nada"],
-["I don't understand", 	"no entiendo"],
-["I don't know", 		"no sé"],
-["I know", 			"lo sé"],
-["Come on", 		"vamos"],
-["Let's go", 		"vámonos"],
-["Come on", 		"venga"],
-["Hurry up", 		"date prisa"],
-["A table for thirteen", 	"una mesa para trece"],
-["The bill, please", 		"la cuenta, por favor"],
-["How are you?", 		"cómo estás?"],
-["I'm fine", 			"estoy bien"],
-["So-so", 			"más o menos"],
-["Nice to meet you", 	"mucho gusto"],
-["What's your name?", 	"cómo te llamas?"],
-["Can you help me?", 	"puedes ayudarme?"],
-["I need help", 		"necesito ayuda"],
-["Can you repeat?", 	"puedes repetir?"],
-["Please speak slowly",	"por favor, habla despacio"],
-["How much is it?", 	"cuánto cuesta?"],
-["Where is the bathroom?", " dónde está el baño?"],
-["I would like this", 	"me gustaría esto"],
-["That's all", 		"eso es todo"],
+ ["See you",    "nos vemos"],
 
-["Sorry",                   "lo siento"],
-["No problem",              "no hay problema"],
-["Just a moment",           "un momento"],
-["Please",                  "por favor"],
-["Thank you very much",     "muchas gracias"],
-["I understand",            "entiendo"],
-["I don't agree",           "no estoy de acuerdo"],
-["That's OK",               "está bien"],
+["My name is",    "me llamo"],
 
-["It is cold",              "hace frío"],
-["It is hot",               "hace calor"],
-["It is windy",             "hace viento"],
-["The weather is nice",     "hace buen tiempo"],
+["Good morning",    "buenos días"],
 
-["A long time ago",         "hace mucho tiempo"],
-["Two days ago",            "hace dos días"],
-["A week ago",              "hace una semana"],
+["Good afternoon / evening",  "buenas tardes"],
 
-["He/She does it",          "lo hace"],
-["He/She does homework",    "hace las tareas"],
-["He/She makes food",       "hace comida"],
-["He/She makes coffee",     "hace café"],
-["He/She makes a cake",     "hace un pastel"],
-["He/She asks questions",   "hace pregunta"],
+["Good night",    "buenas noches"],
 
-["It doesn't matter",       "no hace falta"],
-["I will do it",            "lo haré"],
+["I think so",    "creo que sí"],
 
-["I spoke to him/her",      "le hablé"],
-["I sang to him/her",       "le canté"],
-["I wrote to him/her",      "le escribí"],
-["I kissed him",            "lo besé"],
-["I kissed her",            "la besé"],
-["I invited him",           "lo invité"],
-["I invited her",           "la invité"],
+["Of course",     "por supuesto"],
+
+["That sounds good",  "suena bien"],
+
+["That sounds bad",     "suena mal"],
+
+["Excuse me",     "perdón"],
+
+["You're welcome",  "de nada"],
+
+["I don't understand",  "no entiendo"],
+
+["I don't know",    "no sé"],
+
+["I know",      "lo sé"],
+
+["Come on",     "vamos"],
+
+["Let's go",    "vámonos"],
+
+["Come on",     "venga"],
+
+["Hurry up",    "date prisa"],
+
+["A table for thirteen",  "una mesa para trece"],
+
+["The bill, please",    "la cuenta, por favor"],
+
+["How are you?",    "¿cómo estás?"],
+
+["I'm fine",      "estoy bien"],
+
+["So-so",       "más o menos"],
+
+["Nice to meet you",  "encantado"],
+
+["What's your name?",    "¿cómo te llamas?"],
+
+["Can you help me?",  "¿puedes ayudarme?"],
+
+["I need help",     "necesito ayuda"],
+
+["Can you repeat?",    "¿puedes repetir?"],
+
+["Please speak slowly", "por favor, habla despacio"],
+
+["How much is it?",    "¿cuánto cuesta?"],
+
+["Where is the bathroom?", "¿dónde está el baño?"],
+
+["I would like this",    "me gustaría esto"],
+
+["That's all",    "eso es todo"],
+
+["Sorry",                    "lo siento"],
+
+["No problem",               "no hay problema"],
+
+["Just a moment",            "un momento"],
+
+["Please",                   "por favor"],
+
+["Thank you very much",      "muchas gracias"],
+
+["I understand",             "entiendo"],
+
+["I don't agree",            "no estoy de acuerdo"],
+
+["That's OK",                "está bien"],
+
+["It is cold",               "hace frío"],
+
+["It is hot",                "hace calor"],
+
+["It is windy",              "hace viento"],
+
+["The weather is nice",      "hace buen tiempo"],
+
+["A long time ago",          "hace mucho tiempo"],
+
+["Two days ago",             "hace dos días"],
+
+["A week ago",               "hace una semana"],
+
+["He/She does it",           "lo hace"],
+
+["He/She does homework",     "hace los deberes"],
+
+["He/She makes food",        "prepara la comida"],
+
+["He/She makes coffee",      "hace café"],
+
+["He/She makes a cake",      "hace un pastel"],
+
+["He/She asks questions",    "hace preguntas"],
+
+["It doesn't matter",        "no importa"],
+
+["I will do it",             "lo haré"],
+
+["I spoke to him/her",       "le hablé"],
+
+["I sang to him/her",        "le canté"],
+
+["I wrote to him/her",       "le escribí"],
+
+["I kissed him",             "lo besé"],
+
+["I kissed her",             "la besé"],
+
+["I invited him",            "lo invité"],
+
+["I invited her",            "la invité"],
+
+["It's not necessary / there's no need",    "no hace falta"],
 
 ];
 let L = [];

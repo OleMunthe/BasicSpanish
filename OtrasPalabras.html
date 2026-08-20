@@ -495,211 +495,402 @@ function stripPunctuation(str) {
 
 let mode = null;
 let allWords = [
-    ["classic", "clásico"],
-["comic", "cómico"],
+ ["classic", "clásico"],
+
+["comic / comical", "cómico"],
+
 ["economic", "económico"],
+
 ["physical", "físico"],
+
 ["hysterical", "histérico"],
+
 ["identical", "idéntico"],
+
 ["mechanical", "mecánico"],
+
 ["political", "político"],
+
 ["technical", "técnico"],
+
 ["typical", "típico"],
-["tropical", "trópico"],
+
+["tropical", "tropical"],
+
 ["magical", "mágico"],
+
 ["historical", "histórico"],
+
 ["practical", "práctico"],
+
 ["fantastic", "fantástico"],
+
 ["athletic", "atlético"],
+
 ["ethical", "ético"],
+
 ["geographical", "geográfico"],
+
 ["psychological", "psicológico"],
+
 ["romantic", "romántico"],
+
 ["sarcastic", "sarcástico"],
+
 ["academic", "académico"],
+
 ["pragmatic", "pragmático"],
+
 ["technological", "tecnológico"],
-["theoretical", "teorético"],
+
+["theoretical", "teórico"],
+
 ["pathetic", "patético"],
+
 ["allergic", "alérgico"],
+
 ["problematic", "problemático"],
-["optimistic", "optimístico"],
-["realistic", "realístico"],
+
+["optimistic", "optimista"],
+
+["realistic", "realista"],
+
 ["aesthetic", "estético"],
+
 ["democratic", "democrático"],
+
 ["chaotic", "caótico"],
+
 ["electric", "eléctrico"],
+
 ["critical", "crítico"],
+
 ["analytical", "analítico"],
+
 ["statistical", "estadístico"],
+
 ["hermetic", "hermético"],
+
 ["hypothetical", "hipotético"],
+
 ["drastic", "drástico"],
+
 ["automatic", "automático"],
+
 ["fanatic", "fanático"],
+
 ["ironic", "irónico"],
+
 ["magnetic", "magnético"],
 
 ["artist", "artista"],
+
 ["capitalist", "capitalista"],
+
 ["communist", "comunista"],
+
 ["socialist", "socialista"],
+
 ["guitarist", "guitarrista"],
+
 ["idealist", "idealista"],
+
 ["modernist", "modernista"],
+
 ["florist", "florista"],
+
 ["optimist", "optimista"],
+
 ["pessimist", "pesimista"],
+
 ["pianist", "pianista"],
+
 ["tourist", "turista"],
+
 ["realist", "realista"],
 
 ["cable", "cable"],
+
 ["comparable", "comparable"],
+
 ["durable", "durable"],
+
 ["formidable", "formidable"],
+
 ["presentable", "presentable"],
+
 ["probable", "probable"],
+
 ["responsible", "responsable"],
+
 ["variable", "variable"],
+
 ["horrible", "horrible"],
+
 ["possible", "posible"],
 
 ["problem", "problema"],
+
 ["system", "sistema"],
+
 ["poem", "poema"],
+
 ["theme", "tema"],
+
 ["theorem", "teorema"],
+
 ["scheme", "esquema"],
+
 ["emblem", "emblema"],
+
 ["dilemma", "dilema"],
+
 ["climate", "clima"],
+
 ["cinema", "cine"],
+
 ["axiom", "axioma"],
+
 ["blasphemous", "blasfemo"],
 
 ["actor", "actor"],
+
 ["color", "color"],
+
 ["director", "director"],
+
 ["doctor", "doctor"],
+
 ["error", "error"],
+
 ["favor", "favor"],
+
 ["honor", "honor"],
+
 ["horror", "horror"],
+
 ["humor", "humor"],
+
 ["motor", "motor"],
+
 ["pastor", "pastor"],
-["professor", "profesor"],
+
+["teacher / professor", "profesor"],
+
 ["superior", "superior"],
+
 ["tractor", "tractor"],
+
 ["vapor", "vapor"],
 
 ["animal", "animal"],
+
 ["annual", "anual"],
+
 ["artificial", "artificial"],
+
 ["brutal", "brutal"],
+
 ["canal", "canal"],
+
 ["cathedral", "catedral"],
+
 ["colossal", "colosal"],
+
 ["commercial", "comercial"],
+
 ["criminal", "criminal"],
+
 ["cultural", "cultural"],
+
 ["essential", "esencial"],
+
 ["exceptional", "excepcional"],
+
 ["experimental", "experimental"],
+
 ["funeral", "funeral"],
+
 ["hospital", "hospital"],
+
 ["ideal", "ideal"],
+
 ["illegal", "ilegal"],
+
 ["international", "internacional"],
+
 ["irrational", "irracional"],
+
 ["liberal", "liberal"],
+
 ["local", "local"],
+
 ["material", "material"],
+
 ["mental", "mental"],
+
 ["metal", "metal"],
+
 ["moral", "moral"],
+
 ["national", "nacional"],
+
 ["neutral", "neutral"],
+
 ["normal", "normal"],
+
 ["original", "original"],
+
 ["radical", "radical"],
+
 ["sentimental", "sentimental"],
+
 ["social", "social"],
+
 ["total", "total"],
+
 ["traditional", "tradicional"],
+
 ["trivial", "trivial"],
+
 ["visual", "visual"],
+
 ["jovial", "jovial"],
 
 ["accident", "accidente"],
+
 ["agent", "agente"],
+
 ["client", "cliente"],
+
 ["eminent", "eminente"],
+
 ["equivalent", "equivalente"],
+
 ["intelligent", "inteligente"],
+
 ["patient", "paciente"],
+
 ["permanent", "permanente"],
+
 ["president", "presidente"],
+
 ["resident", "residente"],
+
 ["sufficient", "suficiente"],
+
 ["assistant", "asistente"],
+
 ["dependent", "dependiente"],
+
 ["present", "presente"],
+
 ["convincing", "convincente"],
+
 ["brilliant", "brillante"],
+
 ["transparent", "transparente"],
+
 ["depressing", "deprimente"],
+
 ["participant", "participante"],
+
 ["constant", "constante"],
+
 ["dominant", "dominante"],
+
 ["elephant", "elefante"],
+
 ["elegant", "elegante"],
+
 ["ignorant", "ignorante"],
+
 ["important", "importante"],
+
 ["intolerant", "intolerante"],
+
 ["restaurant", "restaurante"],
-["significant", "significante"],
+
+["significant", "significativo"],
+
 ["interesting", "interesante"],
+
 ["arrogant", "arrogante"],
+
 ["tolerant", "tolerante"],
+
 ["relevant", "relevante"],
 
 ["information", "información"],
+
 ["construction", "construcción"],
+
 ["operation", "operación"],
+
 ["invitation", "invitación"],
+
 ["institution", "institución"],
+
 ["composition", "composición"],
+
 ["production", "producción"],
+
 ["reaction", "reacción"],
+
 ["conclusion", "conclusión"],
+
 ["discussion", "discusión"],
+
 ["action", "acción"],
+
 ["adoption", "adopción"],
+
 ["ambition", "ambición"],
+
 ["civilization", "civilización"],
+
 ["classification", "clasificación"],
+
 ["compensation", "compensación"],
+
 ["creation", "creación"],
+
 ["expansion", "expansión"],
+
 ["explosion", "explosión"],
+
 ["formation", "formación"],
+
 ["generation", "generación"],
+
 ["illustration", "ilustración"],
+
 ["implication", "implicación"],
+
 ["observation", "observación"],
+
 ["occupation", "ocupación"],
+
 ["perfection", "perfección"],
+
 ["precision", "precisión"],
-["reservation", "reservación"],
+
+["reservation", "reserva"],
+
 ["rotation", "rotación"],
+
 ["situation", "situación"],
+
 ["transformation", "transformación"],
+
 ["variation", "variación"],
+
 ["vegetation", "vegetación"],
+
 ["ventilation", "ventilación"],
+
 ["version", "versión"],
+
 ["vision", "visión"],
 ];
 let L = [];
